@@ -11,40 +11,68 @@
     <schema id="5" parent="1" name="performance_schema"/>
     <schema id="6" parent="1" name="sys"/>
     <table id="7" parent="2" name="content"/>
-    <table id="8" parent="2" name="follow"/>
-    <table id="9" parent="2" name="tag"/>
-    <table id="10" parent="2" name="user"/>
-    <column id="11" parent="7" name="id">
+    <table id="8" parent="2" name="content_tag"/>
+    <table id="9" parent="2" name="follow"/>
+    <table id="10" parent="2" name="tag"/>
+    <table id="11" parent="2" name="user"/>
+    <column id="12" parent="7" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="12" parent="7" name="url">
+    <column id="13" parent="7" name="url">
       <Position>2</Position>
       <DataType>varchar(1023)|0</DataType>
     </column>
-    <column id="13" parent="7" name="permission">
+    <column id="14" parent="7" name="permission">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="14" parent="7" name="date">
+    <column id="15" parent="7" name="date">
       <Position>4</Position>
       <DataType>datetime|0</DataType>
     </column>
-    <column id="15" parent="7" name="tagid">
+    <column id="16" parent="7" name="email">
       <Position>5</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>varchar(255)|0</DataType>
     </column>
-    <index id="16" parent="7" name="tagid">
-      <ColNames>tagid</ColNames>
+    <index id="17" parent="7" name="content_ibfk_1">
+      <ColNames>email</ColNames>
     </index>
-    <key id="17" parent="7" name="PRIMARY">
+    <key id="18" parent="7" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="18" parent="7" name="content_ibfk_1">
+    <foreign-key id="19" parent="7" name="content_ibfk_1">
+      <ColNames>email</ColNames>
+      <RefSchemaName>shouqu</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>email</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="20" parent="8" name="tagid">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="21" parent="8" name="contentid">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="22" parent="8" name="contentid">
+      <ColNames>contentid</ColNames>
+    </index>
+    <key id="23" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>tagid
+contentid</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="24" parent="8" name="content_tag_ibfk_1">
       <ColNames>tagid</ColNames>
       <RefSchemaName>shouqu</RefSchemaName>
       <RefTableName>tag</RefTableName>
@@ -52,26 +80,34 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="19" parent="8" name="follower">
+    <foreign-key id="25" parent="8" name="content_tag_ibfk_2">
+      <ColNames>contentid</ColNames>
+      <RefSchemaName>shouqu</RefSchemaName>
+      <RefTableName>content</RefTableName>
+      <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="26" parent="9" name="follower">
       <Position>1</Position>
       <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="20" parent="8" name="followee">
+    <column id="27" parent="9" name="followee">
       <Position>2</Position>
       <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="21" parent="8" name="followee">
+    <index id="28" parent="9" name="followee">
       <ColNames>followee</ColNames>
     </index>
-    <key id="22" parent="8" name="PRIMARY">
+    <key id="29" parent="9" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>follower
 followee</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="23" parent="8" name="follow_ibfk_2">
+    <foreign-key id="30" parent="9" name="follow_ibfk_2">
       <ColNames>follower</ColNames>
       <RefSchemaName>shouqu</RefSchemaName>
       <RefTableName>user</RefTableName>
@@ -79,7 +115,7 @@ followee</ColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="24" parent="8" name="follow_ibfk_1">
+    <foreign-key id="31" parent="9" name="follow_ibfk_1">
       <ColNames>followee</ColNames>
       <RefSchemaName>shouqu</RefSchemaName>
       <RefTableName>user</RefTableName>
@@ -87,29 +123,29 @@ followee</ColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="25" parent="9" name="id">
+    <column id="32" parent="10" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="26" parent="9" name="tagname">
+    <column id="33" parent="10" name="tagname">
       <Position>2</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <column id="27" parent="9" name="email">
+    <column id="34" parent="10" name="email">
       <Position>3</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <index id="28" parent="9" name="email">
+    <index id="35" parent="10" name="email">
       <ColNames>email</ColNames>
     </index>
-    <key id="29" parent="9" name="PRIMARY">
+    <key id="36" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="30" parent="9" name="tag_ibfk_1">
+    <foreign-key id="37" parent="10" name="tag_ibfk_1">
       <ColNames>email</ColNames>
       <RefSchemaName>shouqu</RefSchemaName>
       <RefTableName>user</RefTableName>
@@ -117,28 +153,28 @@ followee</ColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="31" parent="10" name="email">
+    <column id="38" parent="11" name="email">
       <Position>1</Position>
       <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="32" parent="10" name="username">
+    <column id="39" parent="11" name="username">
       <Position>2</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <column id="33" parent="10" name="password">
+    <column id="40" parent="11" name="password">
       <Position>3</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <column id="34" parent="10" name="age">
+    <column id="41" parent="11" name="age">
       <Position>4</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="35" parent="10" name="gender">
+    <column id="42" parent="11" name="gender">
       <Position>5</Position>
       <DataType>char(1)|0</DataType>
     </column>
-    <key id="36" parent="10" name="PRIMARY">
+    <key id="43" parent="11" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>email</ColNames>
       <Primary>1</Primary>
