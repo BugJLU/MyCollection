@@ -1,5 +1,9 @@
 package org.bugjlu.mycollection.po;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 public class User {
 
     private String email;
@@ -7,6 +11,9 @@ public class User {
     private String password;
     private Integer age;
     private Boolean gender;
+    private Set<User> followeeEmail;
+    private Set<Content> content;
+    private Set<Tag> tag;
 
     public String getEmail() {
         return email;
@@ -68,5 +75,30 @@ public class User {
 
     public void setBGender(Boolean gender) {
         this.gender = gender;
+    }
+
+
+    public Set<User> getFolloweeEmail() {
+        return followeeEmail;
+    }
+
+    public void setFolloweeEmail(Set<User> followeeEmail) {
+        this.followeeEmail = followeeEmail;
+    }
+
+    public Set<Content> getContent() {
+        return content;
+    }
+
+    public void setContent(Set<Content> content) {
+        this.content = content;
+    }
+
+    public Set<Tag> getTag() {
+        return tag;
+    }
+
+    public void setTag(Set<Tag> tag) {
+        this.tag = tag;
     }
 }

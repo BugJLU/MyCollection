@@ -1,10 +1,32 @@
 package org.bugjlu.mycollection.po;
 
+import java.util.Date;
+import java.util.Set;
+
 public class Content {
 
     private Integer id;
     private String url;
     private Integer permission;
+    private Date date;
+    private Set<Tag> tag;
+
+    public Set<Tag> getTag() {
+        return tag;
+    }
+
+    public void setTag(Set<Tag> tag) {
+        this.tag = tag;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     private String email;
 
     public Integer getId() {

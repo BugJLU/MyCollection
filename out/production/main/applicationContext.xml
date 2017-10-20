@@ -11,26 +11,21 @@
     <context:component-scan base-package="org.bugjlu.mycollection.service"/>
 
     <!-- Beans for services. -->
-
-
-    </bean>
     <bean id="accountService" class="org.bugjlu.mycollection.service.AccountServiceImpl"/>
     <bean id="contentService" class="org.bugjlu.mycollection.service.ContentServiceImpl"/>
     <bean id="followService" class="org.bugjlu.mycollection.service.FollowServiceImpl"/>
     <bean id="tagService" class="org.bugjlu.mycollection.service.TagServiceImpl"/>
 
-    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">-->
-        <!--<property name="configLocation" value="hibernate.cfg.xml"></property>-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="configLocations">
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
 
-        <!--&lt;!&ndash;&lt;!&ndash; 映射文件 &ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;<property name="mappingResources">&ndash;&gt;-->
-            <!--&lt;!&ndash;<list>&ndash;&gt;-->
-                <!--&lt;!&ndash;<value>hibernate.hbm.xml</value>&ndash;&gt;-->
-            <!--&lt;!&ndash;</list>&ndash;&gt;-->
-        <!--&lt;!&ndash;</property>&ndash;&gt;-->
-    <!--</bean>-->
-    <bean id="contentDao" class="org.bugjlu.mycollection.dao.ContentDaoImpl" />
-    <bean id="tagDao" class="org.bugjlu.mycollection.dao.TagDaoImpl" />
-    <bean id="userDao" class="org.bugjlu.mycollection.dao.UserDaoImpl" />
-
+        <!-- 映射文件 -->
+        <property name="mappingDirectoryLocations">
+            <list>
+                <value>classpath:hibernate.hbm.xml</value>
+            </list>
+        </property>
+    </bean>
 </beans>
