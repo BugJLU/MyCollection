@@ -23,7 +23,7 @@ public class RegisterController {
             return "redirect: index.html";
         }
         request.setAttribute("title", "注册");
-        return "register";
+        return "account/register";
     }
 
     @RequestMapping(value = "regact.html")
@@ -35,11 +35,15 @@ public class RegisterController {
         }
 
         User reg = new User();
-        // TODO: Assign properties into reg.
+        reg.setEmail(regCmd.getEmail());
+        reg.setPassword(regCmd.getPassword());
+        reg.setUserName(regCmd.getUsername());
+        reg.setBGender(regCmd.getGender());
+        reg.setAge(regCmd.getAge());
 
-        if ((reg = accountService.register(reg)) == null) {
-            ModelAndView mav = new ModelAndView("register");
-            mav.addObject("errmsg", "用户ID已存在！");
+        if (accountService.register(reg) == null) {
+            ModelAndView mav = new ModelAndView("account/register");
+            mav.addObject("errmsg", "用户已存在！");
             return mav;
         }
 

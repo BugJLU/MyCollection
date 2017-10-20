@@ -1,0 +1,52 @@
+.maincontainer{
+    position: relative;
+    top: 120px;
+    margin: auto;
+    padding: 0px 20px 20px 20px;
+}
+
+.content{
+    margin: 12px;
+    padding: 12px 0px;
+    box-shadow: 0px 0px 10px;
+    height: 250px;
+    width: 240px;
+}
+
+.content-tags{
+    height: 30px;
+    border: solid 1px;
+    padding: 2px;
+}
+
+.content-title{
+    height: 50px;
+    border: solid 1px;
+}
+
+.content-pict{
+    height: 100px;
+    border: solid 1px;
+}
+
+.content-time{
+    height: 20px;
+    border: solid 1px;
+}
+
+.content-user{
+    height: 20px;
+    border: solid 1px;
+}
+
+.tag-small{
+    display: inline-block;
+    overflow: hidden;
+    padding: 2px 4px;
+    background-color: #66afe9;
+    color: #ffffff;
+}
+
+.tag-big{
+
+}

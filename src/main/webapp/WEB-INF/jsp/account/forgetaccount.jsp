@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-<%@ include file="head.jsp" %>
+<%@ include file="../head.jsp" %>
 
 <body>
 

@@ -23,13 +23,13 @@ public class LoginController {
             return "redirect: index.html";
         }
         request.setAttribute("title", "登录");
-        return "login";
+        return "account/login";
     }
 
     @RequestMapping(value = "forgetaccount.html")
     public String forget(HttpServletRequest request) {
         request.setAttribute("title", "账号找回");
-        return "forgetaccount";
+        return "account/forgetaccount";
     }
 
     @RequestMapping(value = "loginact.html")
@@ -40,10 +40,16 @@ public class LoginController {
         request.setAttribute("title", "登录");
         User user = accountService.login(loginCommand.getEmail(), loginCommand.getPassword());
         if (user == null) {
-            return new ModelAndView("login", "errmsg", "用户名或密码错误！");
+            return new ModelAndView("account/login", "errmsg", "用户名或密码错误！");
         }
         request.getSession().setAttribute("user", user);
         return new ModelAndView("redirect: index.html");
+    }
+
+    @RequestMapping(value = "logout.html")
+    public String logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("user");
+        return "redirect: index.html";
     }
 
 }
