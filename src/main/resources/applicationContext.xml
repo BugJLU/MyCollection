@@ -13,7 +13,6 @@
     <!-- Beans for services. -->
 
 
-    </bean>
     <bean id="accountService" class="org.bugjlu.mycollection.service.AccountServiceImpl"/>
     <bean id="contentService" class="org.bugjlu.mycollection.service.ContentServiceImpl"/>
     <bean id="followService" class="org.bugjlu.mycollection.service.FollowServiceImpl"/>
