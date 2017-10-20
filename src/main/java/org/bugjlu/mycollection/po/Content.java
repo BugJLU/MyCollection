@@ -9,14 +9,14 @@ public class Content {
     private String url;
     private Integer permission;
     private Date date;
-    private Set<Tag> tag;
+    private Set<Tag> tags;
 
-    public Set<Tag> getTag() {
-        return tag;
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public void setTag(Set<Tag> tag) {
-        this.tag = tag;
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     public Date getDate() {

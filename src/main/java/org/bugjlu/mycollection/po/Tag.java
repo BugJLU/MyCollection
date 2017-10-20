@@ -7,14 +7,14 @@ public class Tag {
     private Integer id;
     private String tagName;
     private String email;
-    private Set<Content> content;
+    private Set<Content> contents;
 
-    public Set<Content> getContent() {
-        return content;
+    public Set<Content> getContents() {
+        return contents;
     }
 
-    public void setContent(Set<Content> content) {
-        this.content = content;
+    public void setContents(Set<Content> contents) {
+        this.contents = contents;
     }
 
     public Integer getId() {

@@ -88,7 +88,7 @@ public class UserDaoImpl implements UserDao{
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            Query q = session.createQuery("from User user where user.username=:username")
+            Query q = session.createQuery("from User user where user.userName=:username")
                     .setParameter("username", name);
             userList = q.list();
         } catch (Exception e)

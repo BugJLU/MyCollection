@@ -12,8 +12,8 @@ public class User {
     private Integer age;
     private Boolean gender;
     private Set<User> followeeEmail;
-    private Set<Content> content;
-    private Set<Tag> tag;
+    private Set<Content> contents;
+    private Set<Tag> tags;
 
     public String getEmail() {
         return email;
@@ -86,19 +86,19 @@ public class User {
         this.followeeEmail = followeeEmail;
     }
 
-    public Set<Content> getContent() {
-        return content;
+    public Set<Content> getContents() {
+        return contents;
     }
 
-    public void setContent(Set<Content> content) {
-        this.content = content;
+    public void setContents(Set<Content> contents) {
+        this.contents = contents;
     }
 
-    public Set<Tag> getTag() {
-        return tag;
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public void setTag(Set<Tag> tag) {
-        this.tag = tag;
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }

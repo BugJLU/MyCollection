@@ -81,14 +81,14 @@ public class TagDaoImpl implements TagDao{
             session = sessionFactory.openSession();
             session.beginTransaction();
             Tag tag = session.get(Tag.class, tagId);
-            Set allContent = tag.getContent();
+            Set allContent = tag.getContents();
             for (Iterator<Content> it = allContent.iterator(); it.hasNext() ;)
             {
                 Content content = (Content) it.next();
                 if (content.getId() == contentId)
                     allContent.remove(content);
             }
-            tag.setContent(allContent);
+            tag.setContents(allContent);
             session.save(tag);
             session.getTransaction().commit();
         } catch (Exception e)

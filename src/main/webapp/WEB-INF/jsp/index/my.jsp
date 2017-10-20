@@ -102,10 +102,10 @@
             </div>
         </a>
         <div id="time" class="content-time">
-            <p style="font-size: 10px; color: #8c8c8c"><%= content.getDate() %></p>
+            <p style="font-size: 10px; color: #adadad"><%= content.getDate() %></p>
         </div>
         <div id="user" class="content-user">
-            <p style="font-size: 10px; color: #8c8c8c">收藏者：<%= content.getUserName() %></p>
+            <p style="font-size: 10px; color: #adadad">收藏者：<%= content.getUserName() %></p>
         </div>
     </div>
     <%

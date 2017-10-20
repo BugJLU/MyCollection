@@ -14,12 +14,14 @@
 }
 
 .content-tags{
+    margin: auto 8px;
     height: 30px;
     border: solid 1px;
     padding: 2px;
 }
 
 .content-title{
+    margin: auto 8px;
     height: 50px;
     border: solid 1px;
 }
@@ -30,11 +32,13 @@
 }
 
 .content-time{
+    margin: auto 8px;
     height: 20px;
     border: solid 1px;
 }
 
 .content-user{
+    margin: auto 8px;
     height: 20px;
     border: solid 1px;
 }

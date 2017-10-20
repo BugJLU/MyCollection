@@ -91,14 +91,14 @@ public class ContentDaoImpl implements ContentDao {
             session = sessionFactory.openSession();
             session.beginTransaction();
             Content content = session.get(Content.class, contentId);
-            Set allTag = content.getTag();
+            Set allTag = content.getTags();
             for (Iterator<Tag> it = allTag.iterator(); it.hasNext() ;)
             {
                 Tag tag = (Tag) it.next();
                 if (tag.getId() == tagId)
                     allTag.remove(tag);
             }
-            content.setTag(allTag);
+            content.setTags(allTag);
             session.save(content);
             session.getTransaction().commit();
         } catch (Exception e)
