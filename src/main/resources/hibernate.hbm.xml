@@ -1,0 +1,49 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="org.bugjlu.mycollection.po.User" table="user">
+        <id name="email" column="email" type="java.lang.String">
+            <generator class="native"/>
+        </id>
+        <property name="userName" column="username" type="java.lang.String"></property>
+        <property name="password" column="password" type="java.lang.String"></property>
+        <property name="age" column="age" type="java.lang.Integer"></property>
+        <property name="gender" column="gender" type="java.lang.String"></property>
+        <set name="followeeEmail">
+            <key column="email"></key>
+            <one-to-many class="org.bugjlu.mycollection.po.User"/>
+        </set>
+        <set name="content">
+            <key column="id" />
+            <one-to-many class="org.bugjlu.mycollection.po.Content"/>
+        </set>
+        <set name="tag">
+            <key column="id" />
+            <one-to-many class="org.bugjlu.mycollection.po.Tag"/>
+        </set>
+    </class>
+    <class name="org.bugjlu.mycollection.po.Tag" table="tag">
+        <id name="id" column="id" type="int">
+            <generator class="native" />
+        </id>
+        <property name="tagName" column="tagname" type="java.lang.String"></property>
+        <many-to-one name="email" class="org.bugjlu.mycollection.po.User" column="email"></many-to-one>
+        <set name="id" table="content_tag" cascade="save-update,delete">
+            <key column="contentid"></key>
+            <many-to-many class="org.bugjlu.mycollection.po.Content"></many-to-many>
+        </set>
+    </class>
+    <class name="org.bugjlu.mycollection.po.Content" table="content">
+        <id name="id" column="id" type="int">
+            <generator class="native"/>
+        </id>
+        <property name="url" column="url" type="java.lang.String"></property>
+        <property name="permission" column="permission" type="int"></property>
+        <property name="date" column="date" type="java.util.Date"></property>
+        <many-to-one name="email" class="org.bugjlu.mycollection.po.User" column="email"></many-to-one>
+        <set name="id" table="content_tag" cascade="save-update,delete" >
+            <key column="tagid"></key>
+            <many-to-many class="org.bugjlu.mycollection.po.Tag"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
