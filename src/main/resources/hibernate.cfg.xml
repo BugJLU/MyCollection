@@ -7,12 +7,12 @@
 <hibernate-configuration>
     <session-factory>
         <!-- local connection properties -->
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">
-            jdbc:mysql://localhost:3306/mycollection?useUnicode=true&amp;characterEncoding=UTF-8
+            jdbc:mysql://localhost:3306/shouqu?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC
         </property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">714700</property>
+        <property name="hibernate.connection.password">yujiayu</property>
 
         <!--&lt;!&ndash; 最小连接数 &ndash;&gt;-->
         <!--<property name="hibernate.c3p0.min_size">5</property>-->
@@ -36,11 +36,11 @@
         <!--<property name="automaticTestTable" >c3p0Test</property>-->
         <!--<property name="preferredTestQuery">select * from c3p0Test</property>-->
 
-        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <!-- dialect for MySQL -->
-        <property name="show_sql">true</property>
-        <property name="format_sql">false</property>
-        <property name="connection.autocommit">true</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">false</property>
+        <property name="hibernate.connection.autocommit">true</property>
 
         <!--<property name="hibernate.transaction.factory_class">-->
         <!--org.hibernate.transaction.JDBCTransactionFactory-->

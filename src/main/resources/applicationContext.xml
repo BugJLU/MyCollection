@@ -13,14 +13,7 @@
     <!-- Beans for services. -->
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
-
-        <!--&lt;!&ndash; 映射文件 &ndash;&gt;-->
-        <!--<property name="mappingResources">-->
-        <!--<list>-->
-        <!--<value>hibernate.hbm.xml</value>-->
-        <!--</list>-->
-        <!--</property>-->
+        <property name="configLocation" value="hibernate.cfg.xml"/>
     </bean>
 
 
