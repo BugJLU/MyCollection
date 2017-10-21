@@ -61,28 +61,28 @@ public class ContentDaoImpl implements ContentDao {
         }
     }
 
-    @Override
-    public List<Content> queryByEmail(String email) {
-        List contentList = new ArrayList();
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-            Query q = session.createQuery("from Content content where content.email=:email").setParameter("email",email);
-            session.getTransaction().commit();
-            contentList = q.list();
-        } catch (Exception e)
-        {
-            session.getTransaction().rollback();
-            System.out.println("ContentDaoIMpl:queryByEmail失败");
-            e.printStackTrace();
-        }finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return contentList;
-    }
+//    @Override
+//    public List<Content> queryByEmail(String email) {
+//        List contentList = new ArrayList();
+//        Session session = null;
+//        try {
+//            session = sessionFactory.openSession();
+//            session.beginTransaction();
+//            Query q = session.createQuery("from Content content where content.user.=:email").setParameter("email",email);
+//            session.getTransaction().commit();
+//            contentList = q.list();
+//        } catch (Exception e)
+//        {
+//            session.getTransaction().rollback();
+//            System.out.println("ContentDaoIMpl:queryByEmail失败");
+//            e.printStackTrace();
+//        }finally {
+//            if (session != null) {
+//                session.close();
+//            }
+//        }
+//        return contentList;
+//    }
 
     @Override
     public void deleteTag(int contentId, int tagId) {

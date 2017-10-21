@@ -14,11 +14,11 @@
             <many-to-many column="followee" class="org.bugjlu.mycollection.po.User"/>
         </set>
         <set name="contents" inverse="true">
-            <key column="id" />
+            <key column="email" />
             <one-to-many class="org.bugjlu.mycollection.po.Content"/>
         </set>
         <set name="tags" inverse="true">
-            <key column="id" />
+            <key column="email" />
             <one-to-many class="org.bugjlu.mycollection.po.Tag"/>
         </set>
     </class>
@@ -27,7 +27,7 @@
             <generator class="native" />
         </id>
         <property name="tagName" column="tagname" type="java.lang.String"></property>
-        <many-to-one name="email" class="org.bugjlu.mycollection.po.User" column="email"></many-to-one>
+        <many-to-one name="user" class="org.bugjlu.mycollection.po.User" column="email"></many-to-one>
         <set name="contents" table="content_tag" cascade="save-update,delete">
             <key column="tagid"></key>
             <many-to-many class="org.bugjlu.mycollection.po.Content" column="contentid"></many-to-many>
@@ -40,7 +40,7 @@
         <property name="url" column="url" type="java.lang.String"></property>
         <property name="permission" column="permission" type="int"></property>
         <property name="date" column="date" type="java.util.Date"></property>
-        <many-to-one name="email" class="org.bugjlu.mycollection.po.User" column="email"></many-to-one>
+        <many-to-one name="user" class="org.bugjlu.mycollection.po.User" column="email"></many-to-one>
         <set name="tags" table="content_tag" cascade="save-update,delete" >
             <key column="contentid"></key>
             <many-to-many class="org.bugjlu.mycollection.po.Tag" column="tagid"></many-to-many>

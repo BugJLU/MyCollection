@@ -6,7 +6,7 @@ public class Tag {
 
     private Integer id;
     private String tagName;
-    private String email;
+    private User user;
     private Set<Content> contents;
 
     public Set<Content> getContents() {
@@ -33,12 +33,11 @@ public class Tag {
         this.tagName = tagName;
     }
 
-    public String getEmail() {
-        return email;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUser(User user) {
+        this.user = user;
     }
-
 }

@@ -10,6 +10,7 @@ public class Content {
     private Integer permission;
     private Date date;
     private Set<Tag> tags;
+    private User user;
 
     public Set<Tag> getTags() {
         return tags;
@@ -26,8 +27,6 @@ public class Content {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    private String email;
 
     public Integer getId() {
         return id;
@@ -53,11 +52,11 @@ public class Content {
         this.permission = permission;
     }
 
-    public String getEmail() {
-        return email;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

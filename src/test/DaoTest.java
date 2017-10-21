@@ -6,10 +6,13 @@ import org.bugjlu.mycollection.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @ContextConfiguration(locations = {"/applicationContext.xml"})
 public class DaoTest extends AbstractTestNGSpringContextTests{
@@ -50,11 +53,22 @@ public class DaoTest extends AbstractTestNGSpringContextTests{
     @Test
     public void TagTest()
     {
-        Tag testTag = new Tag();
-        testTag.setContents(null);
-        testTag.setEmail("1578644088@qq.com");
-        testTag.setTagName("标签1");
-        tagDao.save(testTag);
+        Set<Tag> tags = new HashSet<Tag>();
+        User testUser = userDao.QueryByEmail("1578644088@qq.com");
+        Assert.assertNotNull(testUser);
+//        for ( int i = 0; i < 10; i++ ) {
+//            Tag testTag = new Tag();
+//            testTag.setContents(null);
+//            testTag.setUser(testUser);
+//            testTag.setTagName("标签"+i);
+//            tags.add(testTag);
+//            tagDao.save(testTag);
+//        }
+
+        for (Tag tag:
+             testUser.getTags()) {
+            System.out.println(tag.getTagName());
+        }
     }
 
     @Test

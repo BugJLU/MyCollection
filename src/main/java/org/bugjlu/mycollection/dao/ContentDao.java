@@ -12,6 +12,6 @@ import java.util.List;
 public interface ContentDao {
     public void insert(Content tmpContent);
     public void delete(int id);
-    public List<Content> queryByEmail(String email);
+//    public List<Content> queryByEmail(String email);
     public void deleteTag(int contentId, int tagId);
 }
