@@ -27,3 +27,4 @@ MyCollection.iml
 *.iml
 *.sql
 target
+src/main/resources/*
