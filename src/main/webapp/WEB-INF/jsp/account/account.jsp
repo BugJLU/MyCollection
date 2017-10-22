@@ -60,6 +60,48 @@
     </div>
 </nav>
 
+<div id="update" style="visibility:visible;">
+    <input id="switch" type="button" value="" onclick="switch()" />
+</div>
+<div align="center">
+    <form method="POST" action="" >
+        <div >
+            <label class="">邮箱</label>
+            <input id="email" class="" type="email" required="required" disabled="" value="111" style="border:none;background-color:white;"/>
+        </div>
+        <div>
+            <label class="">昵称</label>
+            <input id="username" class="" type="email" required="required" disabled="" />
+        </div>
+        <div>
+            <label class="">年龄</label>
+            <input id="age" class="" type="email" required="required" disabled="" />
+        </div>
+
+        <div>
+            <label class="">性别</label>
+            <label class="">女</label><input type="radio" name="sex" id="female"/>
+            <label class="">男</label><input type="radio" name="sex" id="male"/>
+        </div>
+    </form>
+</div>
+
+<script>
+    function switch()
+    {
+        var button = document.getElementById("switch");
+            if(button.value == "修改")
+            {
+                //跳转到修改界面
+            }
+            if(button.value == "关注")
+            {
+                //进行关注操作
+                button.style.backgroundColor = "grey";
+            }
+    }
+</script>
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->

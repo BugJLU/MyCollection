@@ -9,9 +9,11 @@ import java.util.Set;
 
 @Repository
 public interface UserDao {
-    public void save(User user);
-    public void update(User user);
+    public User save(User user);
+    public User update(User user);
     public User QueryByEmail(String email);
     public List QueryByName(String name);
+    public List FuzzyQueryByEmail(String email);
+    public List FuzzyQueryByName(String name);
     public User LoginCheck(String email, String password);
 }

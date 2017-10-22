@@ -1,7 +1,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
-    <class name="org.bugjlu.mycollection.po.User" table="user">
+<hibernate-mapping default-lazy="false">
+    <class name="org.bugjlu.mycollection.po.User" table="user" >
         <id name="email" column="email" type="java.lang.String">
             <generator class="assigned"/>
         </id>
@@ -11,7 +11,7 @@
         <property name="gender" column="gender" type="java.lang.String"></property>
         <set name="followeeEmail" table="follow">
             <key column="follower"></key>
-            <many-to-many column="followee" class="org.bugjlu.mycollection.po.User"/>
+            <many-to-many column="followee" class="org.bugjlu.mycollection.po.User" />
         </set>
         <set name="contents" inverse="true">
             <key column="email" />
@@ -19,21 +19,21 @@
         </set>
         <set name="tags" inverse="true">
             <key column="email" />
-            <one-to-many class="org.bugjlu.mycollection.po.Tag"/>
+            <one-to-many class="org.bugjlu.mycollection.po.Tag" />
         </set>
     </class>
-    <class name="org.bugjlu.mycollection.po.Tag" table="tag">
+    <class name="org.bugjlu.mycollection.po.Tag" table="tag" >
         <id name="id" column="id" type="int">
             <generator class="native" />
         </id>
         <property name="tagName" column="tagname" type="java.lang.String"></property>
-        <many-to-one name="user" class="org.bugjlu.mycollection.po.User" column="email"></many-to-one>
+        <many-to-one name="user" class="org.bugjlu.mycollection.po.User" column="email" ></many-to-one>
         <set name="contents" table="content_tag" cascade="save-update,delete">
             <key column="tagid"></key>
             <many-to-many class="org.bugjlu.mycollection.po.Content" column="contentid"></many-to-many>
         </set>
     </class>
-    <class name="org.bugjlu.mycollection.po.Content" table="content">
+    <class name="org.bugjlu.mycollection.po.Content" table="content" >
         <id name="id" column="id" type="int">
             <generator class="native"/>
         </id>
