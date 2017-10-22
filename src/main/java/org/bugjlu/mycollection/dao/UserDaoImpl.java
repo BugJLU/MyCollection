@@ -116,7 +116,7 @@ public class UserDaoImpl implements UserDao{
         {
             for(Iterator<User> it = userList.iterator(); it.hasNext(); )
             {
-                User tmpUser = (User) it.next();
+                User tmpUser = it.next();
                 tmpUser.setPassword(null);               //返回之前把密码置空
             }
         }
@@ -198,7 +198,7 @@ public class UserDaoImpl implements UserDao{
                 session.close();
             }
         }
-        if (user != null & user.getPassword().equals(password))
+        if (user != null && user.getPassword().equals(password))
         {
             return user;
         }

@@ -18,12 +18,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ContentServiceImpl implements ContentService {
-    public void addContent(String email, Content content) {
-
+    public Boolean addContent(String email, Content content) {
+        return false;
     }
 
-    public void removeContent(Integer contentId) {
-
+    public Boolean removeContent(Integer contentId) {
+        return false;
     }
 
     public List<ContentVo> getContentFrom(User requester, User respondent) {

@@ -28,21 +28,21 @@ public class DaoTest extends AbstractTestNGSpringContextTests{
     @Test
     public void UserTest()
     {
-        User testUser = new User();
-        testUser.setPassword("123456");
-        testUser.setAge(18);
-        testUser.setBGender(true);
-        testUser.setContents(null);
-        testUser.setEmail("1578644088@qq.com");
-        testUser.setFolloweeEmail(null);
-        testUser.setTags(null);
-        testUser.setUserName("yujiayu");
-        userDao.save(testUser);
-        userDao.LoginCheck("1578644088@qq.com","123456");
-        User tmpUser = userDao.QueryByEmail("1578644088@qq.com");
+//        User testUser = new User();
+//        testUser.setPassword("123456");
+//        testUser.setAge(18);
+//        testUser.setBGender(true);
+//        testUser.setContents(null);
+//        testUser.setEmail("1578644088@qq.com");
+//        testUser.setFolloweeEmail(null);
+//        testUser.setTags(null);
+//        testUser.setUserName("yujiayu");
+//        userDao.save(testUser);
+        User tmpUser = userDao.LoginCheck("1578644088@qq.com","123456");
+//        User tmpUser = userDao.QueryByEmail("1578644088@qq.com");
         System.out.println(tmpUser.getUserName());
-        testUser.setUserName("leon");
-        userDao.update(testUser);
+//        testUser.setUserName("leon");
+//        userDao.update(testUser);
         List userList = userDao.QueryByName("yujiayu");
         for (Iterator it = userList.iterator(); it.hasNext(); )
         {

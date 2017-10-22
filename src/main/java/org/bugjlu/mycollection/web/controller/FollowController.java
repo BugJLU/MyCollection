@@ -28,7 +28,6 @@ public class FollowController {
             return "redirect: index.html";
         }
         request.setAttribute("title", "添加关注");
-        //todo:
         String key = request.getParameter("skey");
         List<User> users = accountService.searchUser(key);
         request.setAttribute("result", users);
@@ -38,6 +37,10 @@ public class FollowController {
     @RequestMapping(value = "followuser.html")
     public String followUser(HttpServletRequest request)
     {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "redirect: index.html";
+        }
         String email = null;
         try {
             email = URLDecoder.decode(request.getParameter("email"),"UTF-8");
@@ -45,9 +48,9 @@ public class FollowController {
         {
             e.printStackTrace();
         }
-        User user = (User) request.getSession().getAttribute("user");
+        System.out.println(email);
         followService.follow(user.getEmail(),email);
-        return "account" //重定向到查看资料界面
+        return "account"; //重定向到查看资料界面
     }
 
 }

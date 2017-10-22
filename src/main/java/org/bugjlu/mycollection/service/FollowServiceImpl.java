@@ -13,7 +13,7 @@ public class FollowServiceImpl implements FollowService {
 
     public void follow(String followerEmail, String followeeEmail) {
         User user = userDao.QueryByEmail(followerEmail);
-        user.addFollowee(User user, )
+//        user.addFollowee(User user, )
     }
 
     public void unfollow(String followerEmail, String followeeEmail) {

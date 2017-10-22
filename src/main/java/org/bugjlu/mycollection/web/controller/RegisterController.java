@@ -37,7 +37,7 @@ public class RegisterController {
         User reg = new User();
         reg.setEmail(regCmd.getEmail());
         reg.setPassword(regCmd.getPassword());
-        reg.setUserName(regCmd.getUsername());
+        reg.setUserName(regCmd.getName());
         reg.setBGender(regCmd.getGender());
         reg.setAge(regCmd.getAge());
 

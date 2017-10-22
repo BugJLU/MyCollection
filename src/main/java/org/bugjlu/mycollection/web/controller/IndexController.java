@@ -3,6 +3,7 @@ package org.bugjlu.mycollection.web.controller;
 import org.bugjlu.mycollection.po.Content;
 import org.bugjlu.mycollection.po.Tag;
 import org.bugjlu.mycollection.po.User;
+import org.bugjlu.mycollection.service.AccountService;
 import org.bugjlu.mycollection.service.ContentService;
 import org.bugjlu.mycollection.service.FollowService;
 import org.bugjlu.mycollection.service.TagService;
@@ -26,6 +27,8 @@ public class IndexController {
     FollowService followService;
     @Autowired
     TagService tagService;
+    @Autowired
+    AccountService accountService;
 
     @RequestMapping(value = "index.html")
     ModelAndView index(HttpServletRequest request){
@@ -62,9 +65,10 @@ public class IndexController {
         return "index/follow";
     }
 
+
+    //TODO: not checked.
     @RequestMapping(value = "addcontent.html")
     String addContent(HttpServletRequest request, AddContentCommand addcmd) {
-        //TODO:
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect: index.html";
@@ -98,6 +102,8 @@ public class IndexController {
         content.setTags(tags);
         contentService.addContent(user.getEmail(), content);
 //        contentService.addContent();
+        //TODO: update user;
+//        user = accountService.
         return null;
     }
 
