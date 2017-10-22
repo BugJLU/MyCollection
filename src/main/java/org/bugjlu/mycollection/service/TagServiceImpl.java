@@ -3,7 +3,7 @@ package org.bugjlu.mycollection.service;
 import org.bugjlu.mycollection.po.Tag;
 
 public class TagServiceImpl implements TagService {
-    public void addTag(Tag tag) {
+    public Tag addTag(Tag tag) {
 
     }
 
@@ -11,7 +11,7 @@ public class TagServiceImpl implements TagService {
 
     }
 
-    public void modifyTag(Integer tagid, Tag newTag) {
+    public Tag modifyTag(Integer tagid, Tag newTag) {
 
     }
 
