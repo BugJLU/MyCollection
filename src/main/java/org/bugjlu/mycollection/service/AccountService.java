@@ -14,8 +14,9 @@ public interface AccountService {
     // Return null means user already exists or format illegal.
     User register(User user);
 
-    // Return null means user can't be modified in that way.
-    User modifyAccount(String email, User newInfo);
+    List searchUser(String key);
+
+    User modifyUser(User user);
 
     List<User> searchUser(String key);
 

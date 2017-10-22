@@ -16,7 +16,7 @@ public class UserDaoImpl implements UserDao{
     private SessionFactory sessionFactory;
 
     @Override
-    public void save(User user) {
+    public User save(User user) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -28,15 +28,18 @@ public class UserDaoImpl implements UserDao{
             session.getTransaction().rollback();
             System.out.println("UserDaoImpl:save失败");
             e.printStackTrace();
+            return null;
         }finally {
             if (session != null) {
                 session.close();
             }
         }
+        user.setPassword("");
+        return user;
     }
 
     @Override
-    public void update(User user) {
+    public User update(User user) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -48,11 +51,14 @@ public class UserDaoImpl implements UserDao{
             session.getTransaction().rollback();
             System.out.println("UserDaoImpl:update失败");
             e.printStackTrace();
+            return null;
         }finally {
             if (session != null) {
                 session.close();
             }
         }
+        user.setPassword(null);
+        return user;
     }
 
     @Override
@@ -91,6 +97,7 @@ public class UserDaoImpl implements UserDao{
             Query q = session.createQuery("from User user where user.userName=:username")
                     .setParameter("username", name);
             userList = q.list();
+            session.getTransaction().commit();
         } catch (Exception e)
         {
             session.getTransaction().rollback();
@@ -108,6 +115,62 @@ public class UserDaoImpl implements UserDao{
                 User tmpUser = (User) it.next();
                 tmpUser.setPassword(null);               //返回之前把密码置空
             }
+        }
+        return userList;
+    }
+
+    @Override
+    public List FuzzyQueryByEmail(String email) {
+        Session session = null;
+        List<User> userList = new ArrayList();
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            Query q = session.createQuery("from User user where user.email like :email")
+                    .setParameter("email", "%" + email + "%");
+            userList = q.list();
+            session.getTransaction().commit();
+        } catch (Exception e)
+        {
+            session.getTransaction().rollback();
+            System.out.println("UserDaoImpl:QueryByEmail失败");
+            e.printStackTrace();
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        for (User user : userList)
+        {
+            user.setPassword(null);
+        }
+        return userList;
+    }
+
+    @Override
+    public List FuzzyQueryByName(String name) {
+        Session session = null;
+        List<User> userList = new ArrayList();
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            Query q = session.createQuery("from User user where user.userName like :username")
+                    .setParameter("username", "%" + name + "%");
+            userList = q.list();
+            session.getTransaction().commit();
+        } catch (Exception e)
+        {
+            session.getTransaction().rollback();
+            System.out.println("UserDaoImpl:QueryByEmail失败");
+            e.printStackTrace();
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        for (User user : userList)
+        {
+            user.setPassword(null);
         }
         return userList;
     }

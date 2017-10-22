@@ -56,14 +56,14 @@ public class DaoTest extends AbstractTestNGSpringContextTests{
         Set<Tag> tags = new HashSet<Tag>();
         User testUser = userDao.QueryByEmail("1578644088@qq.com");
         Assert.assertNotNull(testUser);
-//        for ( int i = 0; i < 10; i++ ) {
-//            Tag testTag = new Tag();
-//            testTag.setContents(null);
-//            testTag.setUser(testUser);
-//            testTag.setTagName("标签"+i);
-//            tags.add(testTag);
-//            tagDao.save(testTag);
-//        }
+        for ( int i = 0; i < 10; i++ ) {
+            Tag testTag = new Tag();
+            testTag.setContents(null);
+            testTag.setUser(testUser);
+            testTag.setTagName("标签"+i);
+            tags.add(testTag);
+            tagDao.save(testTag);
+        }
 
         for (Tag tag:
              testUser.getTags()) {
