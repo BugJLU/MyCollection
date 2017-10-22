@@ -1,4 +1,6 @@
-<%--
+<%@ page import="org.bugjlu.mycollection.web.vo.ContentVo" %>
+<%@ page import="java.util.List" %>
+<%@ page import="org.bugjlu.mycollection.po.Tag" %><%--
   Created by IntelliJ IDEA.
   User: mac
   Date: 2017/10/6
@@ -11,8 +13,10 @@
 
 <%@ include file="../head.jsp" %>
 
-<body>
-<nav class="navbar navbar-fixed-top navbar-default container-fluid">
+<link href="css/contentpage.css" rel="stylesheet">
+
+<body class="body-my" onresize="resize()" onload="resize()">
+<nav class="navbar navbar-fixed-top navbar-default container-fluid navbar-my">
     <div>
         <div class="navbar-header">
             <a href="#" class="navbar-brand">收藏荚</a>
@@ -50,6 +54,59 @@
         </div>
     </div>
 </nav>
+
+<div class="maincontainer row" id="maincontainer">
+    <%
+        List<ContentVo> contents = (List<ContentVo>) request.getAttribute("contents");
+        if (contents == null) {
+            // TODO: nothing to show
+        } else {
+            for (ContentVo content :
+                    contents) {
+                content.fetchTitlePict();
+    %>
+    <div class="content col-xs-3" id="content-<%= content.getId() %>">
+        <div id="tags" class="content-tags">
+            <%
+                List<Tag> tags = content.getTags();
+                if (tags != null) {
+                    for (Tag tag :
+                            tags) {
+            %>
+            <div class="tag-small" id="tag-<%= tag.getId() %>">
+                <%= tag.getTagName() %>
+            </div>
+            <%
+                    }
+                }
+            %>
+        </div>
+        <a href="<%= content.getUrl() %>" target="_blank">
+            <div id="title" class="content-title">
+                <%= content.getTitle() %>
+                <%--我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题--%>
+            </div>
+            <div id="pict" class="content-pict">
+                <img class="pict-img" src="<%= content.getPict() %>" alt="<%= content.getTitle() %>">
+                <%--aaaaaa--%>
+            </div>
+        </a>
+        <div id="time" class="content-time">
+            <p style="font-size: 10px; color: #adadad"><%= content.getDate() %></p>
+        </div>
+        <div id="user" class="content-user">
+            <p style="font-size: 10px; color: #adadad">收藏者：<%= content.getUserName() %></p>
+        </div>
+    </div>
+    <%
+            }
+        }
+    %>
+</div>
+
+<%@include file="hiddencards.jsp"%>
+
+<script src="js/contentpage.js"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>

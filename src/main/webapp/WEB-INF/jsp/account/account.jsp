@@ -11,7 +11,9 @@
 
 <%@ include file="../head.jsp" %>
 
-<nav class="navbar navbar-fixed-top navbar-default container-fluid">
+<body class="body-my">
+
+<nav class="navbar navbar-fixed-top navbar-default container-fluid navbar-my">
     <div>
         <div class="navbar-header">
             <a href="#" class="navbar-brand">收藏荚</a>
@@ -49,7 +51,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="searchuser.html">添加关注</a> </li>
-                        <li><a href="add.html">添加内容</a> </li>
+                        <li><a href="my.html">添加内容</a> </li>
                     </ul>
                 </li>
                 <%

@@ -13,7 +13,7 @@
     <!-- Beans for services. -->
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="configLocation" value="hibernate.cfg.xml"/>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
     </bean>
 
 

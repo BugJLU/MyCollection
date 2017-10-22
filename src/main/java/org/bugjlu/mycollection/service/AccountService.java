@@ -18,4 +18,6 @@ public interface AccountService {
 
     User modifyUser(User user);
 
+    List<User> searchUser(String key);
+
 }

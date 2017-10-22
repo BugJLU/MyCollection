@@ -13,8 +13,8 @@
 
 <link href="css/login&register.css" rel="stylesheet">
 
-<body>
-<nav class="navbar navbar-fixed-top navbar-default container-fluid">
+<body class="body-my">
+<nav class="navbar navbar-fixed-top navbar-default container-fluid navbar-my">
     <div>
         <div class="navbar-header">
             <a href="#" class="navbar-brand">收藏荚</a>
