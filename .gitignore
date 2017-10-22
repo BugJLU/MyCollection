@@ -27,3 +27,7 @@ MyCollection.iml
 *.iml
 *.sql
 target
+
+
+#hibernate Configurations
+src/main/resources/*

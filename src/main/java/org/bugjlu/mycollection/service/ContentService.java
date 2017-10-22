@@ -10,8 +10,8 @@ import java.util.List;
 
 @Service
 public interface ContentService {
-    void addContent(String email, Content content);
-    void removeContent(Integer contentId);
+    Boolean addContent(String email, Content content);
+    Boolean removeContent(Integer contentId);
     List<ContentVo> getContentFrom(User requester, User respondent);
     List<ContentVo> getContentFrom(User requester, List<User> respondents);
     List<ContentVo> getLatestContentFrom(User requester, User respondent, Date time);

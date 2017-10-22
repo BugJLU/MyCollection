@@ -34,4 +34,14 @@ public class AccountServiceImpl implements AccountService {
         UserDaoImpl userDao = new UserDaoImpl();
         return userDao.update(user);
     }
+
+    @Override
+    public User follow(String followerEmail, String followeeEmail) {
+        return null;
+    }
+
+    @Override
+    public User unfollow(String followerEmail, String followeeEmail) {
+        return null;
+    }
 }

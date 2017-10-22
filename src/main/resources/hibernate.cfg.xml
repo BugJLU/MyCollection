@@ -9,10 +9,10 @@
         <!-- local connection properties -->
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">
-            jdbc:mysql://localhost:3306/mycollection
+            jdbc:mysql://localhost:3306/shouqu?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC
         </property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">714700</property>
+        <property name="hibernate.connection.password">yujiayu</property>
 
         <!--&lt;!&ndash; 最小连接数 &ndash;&gt;-->
         <!--<property name="hibernate.c3p0.min_size">5</property>-->
