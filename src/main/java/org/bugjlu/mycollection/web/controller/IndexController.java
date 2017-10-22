@@ -3,6 +3,8 @@ package org.bugjlu.mycollection.web.controller;
 import org.bugjlu.mycollection.po.Content;
 import org.bugjlu.mycollection.po.User;
 import org.bugjlu.mycollection.service.ContentService;
+import org.bugjlu.mycollection.service.FollowService;
+import org.bugjlu.mycollection.web.vo.AddContentCommand;
 import org.bugjlu.mycollection.web.vo.ContentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ public class IndexController {
 
     @Autowired
     ContentService contentService;
+    @Autowired
+    FollowService followService;
 
     @RequestMapping(value = "index.html")
     ModelAndView index(HttpServletRequest request){
@@ -27,7 +31,6 @@ public class IndexController {
         }
         request.setAttribute("title", "我的");
         return new ModelAndView("redirect: my.html");
-
     }
 
     @RequestMapping(value = "my.html")
@@ -38,18 +41,36 @@ public class IndexController {
         }
         request.setAttribute("title", "我的");
         List<ContentVo> contents = contentService.getContentFrom(user, user);
-        System.out.println(contents.size());
         request.setAttribute("contents", contents);
         return "index/my";
     }
 
     @RequestMapping(value = "follow.html")
     String follow(HttpServletRequest request) {
-        if (request.getSession().getAttribute("user") == null) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
             return "redirect: index.html";
         }
         request.setAttribute("title", "关注");
+        List<User> followees = followService.getAllFollowee(user.getEmail());
+        List<ContentVo> contents = contentService.getContentFrom(user, followees);
+        request.setAttribute("contents", contents);
         return "index/follow";
+    }
+
+    @RequestMapping(value = "addcontent.html")
+    String addContent(HttpServletRequest request, AddContentCommand addcmd) {
+        //TODO:
+        Content content = new Content();
+        content.setUrl(addcmd.getUrl());
+        content.setPermission(addcmd.getPms());
+        String[] tagNames = addcmd.getTags().split(",");
+        for (int i = 0; i < tagNames.length; i++) {
+            tagNames[i] = tagNames[i].trim();
+
+        }
+//        contentService.addContent();
+        return null;
     }
 
 //    @RequestMapping(value = "hot.html")

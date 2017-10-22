@@ -16,8 +16,8 @@
 
 <link href="css/contentpage.css" rel="stylesheet">
 
-<body onresize="resize()" onload="resize()">
-<nav class="navbar navbar-fixed-top navbar-default container-fluid">
+<body onresize="resize()" onload="resize()" class="body-my">
+<nav class="navbar navbar-fixed-top navbar-default container-fluid navbar-my">
     <div>
         <div class="navbar-header">
             <a href="#" class="navbar-brand">收藏荚</a>
@@ -61,7 +61,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="searchuser.html">添加关注</a> </li>
-                        <li><a href="add.html">添加内容</a> </li>
+                        <li><a href="javascript:void(0);" onclick="addContent()">添加内容</a> </li>
                     </ul>
                 </li>
                 <%
@@ -74,8 +74,17 @@
 
 <div class="maincontainer row" id="maincontainer">
     <%
-        for (ContentVo content :
-                (List<ContentVo>) request.getAttribute("contents")) {
+        List<ContentVo> contents = (List<ContentVo>) request.getAttribute("contents");
+        if (contents == null || contents.size() == 0) {
+    %>
+    <div class="nothingtoshow">
+        <h2>您还没有收藏任何内容哦！</h2>
+        <h2>点击<a href="javascript:void(0);" onclick="addContent()">添加内容</a></h2>
+    </div>
+    <%        } else {
+            for (ContentVo content :
+                    contents) {
+                content.fetchTitlePict();
     %>
     <div class="content col-xs-3" id="content-<%= content.getId() %>">
         <div id="tags" class="content-tags">
@@ -85,33 +94,38 @@
                     for (Tag tag :
                             tags) {
             %>
-            <div class="tag-small" id="tag-<%= tag.getId() %>"><p style="margin: 0;">
+            <div class="tag-small" id="tag-<%= tag.getId() %>">
                 <%= tag.getTagName() %>
-            </p></div>
+            </div>
             <%
                     }
                 }
             %>
         </div>
-        <a href="<%= content.getUrl() %>">
+        <a href="<%= content.getUrl() %>" target="_blank">
             <div id="title" class="content-title">
-                <h5>AAA</h5>
+                <%= content.getTitle() %>
+                <%--我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题--%>
             </div>
             <div id="pict" class="content-pict">
-                <p>aaaaaa</p>
+                <img class="pict-img" src="<%= content.getPict() %>" alt="<%= content.getTitle() %>">
+                <%--aaaaaa--%>
             </div>
         </a>
         <div id="time" class="content-time">
             <p style="font-size: 10px; color: #adadad"><%= content.getDate() %></p>
         </div>
         <div id="user" class="content-user">
-            <p style="font-size: 10px; color: #adadad">收藏者：<%= content.getUserName() %></p>
+            <%--<p style="font-size: 10px; color: #adadad">收藏者：<%= content.getUserName() %></p>--%>
         </div>
     </div>
     <%
+            }
         }
     %>
 </div>
+
+<%@include file="hiddencards.jsp"%>
 
 <script src="js/contentpage.js"></script>
 

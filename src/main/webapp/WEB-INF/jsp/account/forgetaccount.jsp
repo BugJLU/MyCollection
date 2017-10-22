@@ -11,7 +11,7 @@
 
 <%@ include file="../head.jsp" %>
 
-<body>
+<body class="body-my">
 
 <link href="css/login&register.css" rel="stylesheet">
 

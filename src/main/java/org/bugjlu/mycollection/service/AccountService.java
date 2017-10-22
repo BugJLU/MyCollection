@@ -3,6 +3,8 @@ package org.bugjlu.mycollection.service;
 import org.bugjlu.mycollection.po.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface AccountService {
 
@@ -14,5 +16,7 @@ public interface AccountService {
 
     // Return null means user can't be modified in that way.
     User modifyAccount(String email, User newInfo);
+
+    List<User> searchUser(String key);
 
 }

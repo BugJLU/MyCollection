@@ -11,7 +11,7 @@
 
 <%@ include file="head.jsp" %>
 
-<body>
+<body class="body-my">
 <h1>你好，世界！</h1>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
