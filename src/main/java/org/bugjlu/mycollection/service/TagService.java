@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public interface TagService {
     void addTag(Tag tag);
     void removeTag(Integer tagid);
-    void modifyTag(Integer tagid, Tag newTag);
+    void modifyTag(Tag newTag);
     void addContentToTag(Integer contentId, Integer tagId);
     void removeContentFromTag(Integer contentId, Integer tagId);
 }

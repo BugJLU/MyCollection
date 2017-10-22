@@ -14,10 +14,11 @@ public interface AccountService {
     // Return null means user already exists or format illegal.
     User register(User user);
 
-    List searchUser(String key);
-
     User modifyUser(User user);
 
     List<User> searchUser(String key);
 
+    User follow(String followerEmail,String followeeEmail);
+
+    User unfollow(String followerEmail, String followeeEmail);
 }

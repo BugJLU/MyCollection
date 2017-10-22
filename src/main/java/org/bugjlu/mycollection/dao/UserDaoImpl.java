@@ -44,6 +44,10 @@ public class UserDaoImpl implements UserDao{
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
+            if (user.getPassword() == null)
+            {
+                user.setPassword(session.get(User.class, user.getEmail()).getPassword());
+            }
             session.update(user);
             session.getTransaction().commit();
         } catch (Exception e)

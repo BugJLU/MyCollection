@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.net.URLEncoder" %><%--
   Created by IntelliJ IDEA.
   User: mac
   Date: 2017/10/6
@@ -62,11 +62,26 @@
     </div>
 </nav>
 
-<div id="update" style="visibility:visible;">
-    <input id="switch" type="button" value="" onclick="switch()" />
+<%
+    String email = request.getParameter("email");
+    if(email == null)
+    {
+%>
+
+<div>
+    <a href="/updateinfo.html">修改</a>
 </div>
+<%
+}else{
+%>
+<div>
+    <a href="/followuser.html?email=<%= URLEncoder.encode(email,"UTF-8") %>">关注</a>
+</div>
+<%
+    }
+%>
+
 <div align="center">
-    <form method="POST" action="" >
         <div >
             <label class="">邮箱</label>
             <input id="email" class="" type="email" required="required" disabled="" value="111" style="border:none;background-color:white;"/>
@@ -85,7 +100,6 @@
             <label class="">女</label><input type="radio" name="sex" id="female"/>
             <label class="">男</label><input type="radio" name="sex" id="male"/>
         </div>
-    </form>
 </div>
 
 <script>
