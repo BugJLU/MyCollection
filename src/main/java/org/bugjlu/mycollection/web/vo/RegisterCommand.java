@@ -2,7 +2,7 @@ package org.bugjlu.mycollection.web.vo;
 
 public class RegisterCommand {
     private String email;
-    private String username;
+    private String name;
     private String password;
     private Integer age;
     private Boolean gender;
@@ -15,12 +15,12 @@ public class RegisterCommand {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -43,7 +43,7 @@ public class RegisterCommand {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
-        this.gender = gender;
+    public void setGender(String gender) {
+        this.gender = gender.equals("M");
     }
 }

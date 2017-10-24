@@ -1,6 +1,7 @@
 package org.bugjlu.mycollection.web.controller;
 
 
+import org.bugjlu.mycollection.po.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,13 +14,20 @@ public class AccountController {
     @RequestMapping(value="account.html")
     public String account(HttpServletRequest request)
     {
-        return null;
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "redirect: index.html";
+        }
+        return "account/account";
     }
 
     @RequestMapping(value="updateinfo.html")
-    public String accountUpdate(HttpServletRequest request)
-    {
-        return null;
+    public String updateInfo(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "redirect: index.html";
+        }
+        return "account/updateinfo";
     }
 
 

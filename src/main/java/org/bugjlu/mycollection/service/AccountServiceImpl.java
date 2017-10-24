@@ -12,8 +12,6 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     UserDao userDao;
 
-
-
     public User login(String email, String password) {
         // TODO: rewrite
 //        User user = new User();

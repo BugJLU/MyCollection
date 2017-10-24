@@ -1,5 +1,6 @@
-import org.bugjlu.mycollection.dao.*;
-import org.bugjlu.mycollection.po.Content;
+import org.bugjlu.mycollection.dao.ContentDaoImpl;
+import org.bugjlu.mycollection.dao.TagDaoImpl;
+import org.bugjlu.mycollection.dao.UserDaoImpl;
 import org.bugjlu.mycollection.po.Tag;
 import org.bugjlu.mycollection.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,10 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @ContextConfiguration(locations = {"/applicationContext.xml"})
 public class DaoTest extends AbstractTestNGSpringContextTests{
@@ -20,7 +24,6 @@ public class DaoTest extends AbstractTestNGSpringContextTests{
 
     @Autowired
     TagDaoImpl tagDao;
-
 
     @Test
     public void UserTest()
