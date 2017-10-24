@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -16,11 +17,24 @@ import java.util.regex.Pattern;
 public class ContentVo {
     private Integer id;
     private String url;
-    private Timestamp date;
+    private Date date;
     private String userName;
     private List<Tag> tags;
     private String title;
     private String pict;
+
+    public ContentVo(Content content) {
+        id = content.getId();
+        url = content.getUrl();
+        date = content.getDate();
+        userName = content.getUser().getUserName();
+        tags = new ArrayList<Tag>(content.getTags());
+        fetchTitlePict();
+    }
+
+    public ContentVo() {
+
+    }
 
     public String getTitle() {
         return title;
@@ -54,11 +68,11 @@ public class ContentVo {
         this.url = url;
     }
 
-    public Timestamp getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

@@ -1,4 +1,5 @@
-<%@ page import="java.net.URLEncoder" %><%--
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="org.bugjlu.mycollection.po.User" %><%--
   Created by IntelliJ IDEA.
   User: mac
   Date: 2017/10/6
@@ -42,7 +43,7 @@
                 <%
                 } else {
                 %>
-                <li><a href="#">欢迎您，${user.userName}</a></li>
+                <li><a href="account.html">欢迎您，${user.userName}</a></li>
                 <li><a href="logout.html">注销</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -63,60 +64,111 @@
 </nav>
 
 <%
-    String email = request.getParameter("email");
-    if(email == null)
-    {
+    User show = (User) request.getAttribute("show");
+    if (show == null) response.sendRedirect("index.html");
+//    System.out.println("account: "+show.getEmail());
 %>
 
-<div>
-    <a href="/updateinfo.html">修改</a>
-</div>
-<%
-}else{
-%>
-<div>
-    <a href="/followuser.html?email=<%= URLEncoder.encode(email,"UTF-8") %>">关注</a>
-</div>
-<%
-    }
-%>
-
-<div align="center">
-        <div >
-            <label class="">邮箱</label>
-            <input id="email" class="" type="email" required="required" disabled="" value="111" style="border:none;background-color:white;"/>
-        </div>
-        <div>
-            <label class="">昵称</label>
-            <input id="username" class="" type="email" required="required" disabled="" />
-        </div>
-        <div>
-            <label class="">年龄</label>
-            <input id="age" class="" type="email" required="required" disabled="" />
-        </div>
-
-        <div>
-            <label class="">性别</label>
-            <label class="">女</label><input type="radio" name="sex" id="female"/>
-            <label class="">男</label><input type="radio" name="sex" id="male"/>
-        </div>
-</div>
-
-<script>
-    function switch()
-    {
-        var button = document.getElementById("switch");
-            if(button.value == "修改")
-            {
-                //跳转到修改界面
+<div align="center" class="simple-container">
+    <h1><%= show.getUserName() %></h1>
+    <h2><%= show.getEmail() %></h2>
+    <div class="info-box">
+        <%
+            if (show.getBGender() != null) {
+        %>
+        <p>性别：<%= show.getBGender() ? "男" : "女" %></p>
+        <%
             }
-            if(button.value == "关注")
-            {
-                //进行关注操作
-                button.style.backgroundColor = "grey";
+        %>
+        <%
+            if (show.getAge() != null) {
+        %>
+        <p>年龄：<%= show.getAge() %></p>
+        <%
             }
-    }
-</script>
+        %>
+    </div>
+    <div class="info-box">
+        <p class="single-line">关注<b><%= show.getFollowee().size() %></b>人</p>
+        <p class="single-line">有<b><%= show.getContents().size() %></b>篇收藏内容</p>
+    </div>
+    <%
+        User user = (User) request.getSession().getAttribute("user");
+        if (show.getEmail().equals(user.getEmail())) {
+    %>
+    <a class="btn btn-default btn-primary" href="updateinfo.html">修改信息</a>
+    <%
+        } else {
+            if (user.getFollowee().contains(show)) {
+    %>
+    <a
+            class="btn btn-default btn-primary"
+            href="followact.html?email=<%= URLEncoder.encode(show.getEmail(),"UTF-8") %>">
+        关注
+    </a>
+    <%
+            } else {
+    %>
+    <a class="btn btn-default btn-default" href="#">已关注</a>
+    <%
+            }
+        }
+    %>
+
+        <%--<div >--%>
+            <%--<label class="">邮箱</label>--%>
+            <%--<input id="email" class="" type="email" required="required" disabled="" value="111" style="border:none;background-color:white;"/>--%>
+        <%--</div>--%>
+        <%--<div>--%>
+            <%--<label class="">昵称</label>--%>
+            <%--<input id="username" class="" type="email" required="required" disabled="" />--%>
+        <%--</div>--%>
+        <%--<div>--%>
+            <%--<label class="">年龄</label>--%>
+            <%--<input id="age" class="" type="email" required="required" disabled="" />--%>
+        <%--</div>--%>
+
+        <%--<div>--%>
+            <%--<label class="">性别</label>--%>
+            <%--<label class="">女</label><input type="radio" name="sex" id="female"/>--%>
+            <%--<label class="">男</label><input type="radio" name="sex" id="male"/>--%>
+        <%--</div>--%>
+    <%--<%--%>
+        <%--String email = request.getParameter("email");--%>
+        <%--if(email == null ||--%>
+                <%--email.equals(((User)request.getSession().getAttribute("user")).getEmail()))--%>
+        <%--{--%>
+    <%--%>--%>
+
+    <%--<div>--%>
+        <%--<a href="/updateinfo.html">修改</a>--%>
+    <%--</div>--%>
+    <%--<%--%>
+    <%--}else{--%>
+    <%--%>--%>
+    <%--<div>--%>
+        <%--<a href="/followuser.html?email=<%= URLEncoder.encode(email,"UTF-8") %>">关注</a>--%>
+    <%--</div>--%>
+    <%--<%--%>
+        <%--}--%>
+    <%--%>--%>
+</div>
+
+<%--<script>--%>
+    <%--function switch()--%>
+    <%--{--%>
+        <%--var button = document.getElementById("switch");--%>
+            <%--if(button.value == "修改")--%>
+            <%--{--%>
+                <%--//跳转到修改界面--%>
+            <%--}--%>
+            <%--if(button.value == "关注")--%>
+            <%--{--%>
+                <%--//进行关注操作--%>
+                <%--button.style.backgroundColor = "grey";--%>
+            <%--}--%>
+    <%--}--%>
+<%--</script>--%>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>

@@ -29,12 +29,14 @@ public class FollowController {
         }
         request.setAttribute("title", "添加关注");
         String key = request.getParameter("skey");
-        List<User> users = accountService.searchUser(key);
-        request.setAttribute("result", users);
+        if (key != null && !key.equals("")) {
+            List<User> users = accountService.searchUser(key);
+            request.setAttribute("result", users);
+        }
         return "account/searchuser";
     }
 
-    @RequestMapping(value = "followuser.html")
+    @RequestMapping(value = "followact.html")
     public String followUser(HttpServletRequest request)
     {
         User user = (User) request.getSession().getAttribute("user");
