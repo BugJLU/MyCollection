@@ -32,8 +32,7 @@ public class AccountController {
                 email.equals(user.getEmail())) {
             show = user;
         } else {
-            //TODO:
-                                            show = user;
+            show = accountService.queryByEmail(email);
 //            show = accountService.get;
             if (show == null) {
                 return "redirect: index.html";

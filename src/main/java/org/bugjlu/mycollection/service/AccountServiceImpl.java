@@ -42,6 +42,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public User queryByEmail(String email) {
+        return userDao.QueryByEmail(email);
+    }
+
+    @Override
     public User modifyUser(User user) {
         return userDao.update(user);
     }

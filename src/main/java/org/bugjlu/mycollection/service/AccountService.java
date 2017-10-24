@@ -20,6 +20,8 @@ public interface AccountService {
 
     List<User> searchUser(String key);
 
+    User queryByEmail(String email);
+
     User follow(String followerEmail,String followeeEmail);
 
     User unfollow(String followerEmail, String followeeEmail);

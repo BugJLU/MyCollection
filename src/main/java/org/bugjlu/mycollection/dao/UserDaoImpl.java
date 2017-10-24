@@ -7,10 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class UserDaoImpl implements UserDao{
     @Autowired
@@ -190,11 +187,13 @@ public class UserDaoImpl implements UserDao{
     @Override
     public Boolean LoginCheck(String email, String password) {
         Session session = null;
-        User user = null;
+        List<User> user = new ArrayList<User>();
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            user = session.get(User.class, email);
+            String hql = "from User user where email=:email and password=:password";
+            Query q = session.createQuery(hql).setParameter("email",email).setParameter("password",password);
+            user = q.list();
             session.getTransaction().commit();
         } catch (Exception e)
         {
@@ -206,11 +205,7 @@ public class UserDaoImpl implements UserDao{
                 session.close();
             }
         }
-        if (user != null && user.getPassword().equals(password))
-        {
-            return true;
-        }
-        return false;
+        return user.size() > 0;
     }
 
     @Override
@@ -224,6 +219,10 @@ public class UserDaoImpl implements UserDao{
             Set allFollowee = follower.getFollowee();
             allFollowee.add(followee);
             follower.setFollowee(allFollowee);
+            if (follower.getPassword() == null)
+            {
+                follower.setPassword(session.get(User.class, follower.getEmail()).getPassword());
+            }
             session.update(follower);
 //            if (follower.getPassword() == null)
 //            {

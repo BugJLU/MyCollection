@@ -60,12 +60,21 @@ public class IndexController {
         }
         request.setAttribute("title", "关注");
         List<User> followees = followService.getAllFollowee(user.getEmail());
+        if (followees.size() == 0) {
+            request.setAttribute("contents", null);
+            return "index/follow";
+        }
         List<String> followeeEmails = new ArrayList<String>();
         for (User email : followees){
             followeeEmails.add(email.getEmail());
         }
         List<Content> contents = contentService.getContentFrom(user.getEmail(), followeeEmails);
-        request.setAttribute("contents", contents);
+        List<ContentVo> results = new ArrayList<ContentVo>();
+        for (Content c :
+                contents) {
+            results.add(new ContentVo(c));
+        }
+        request.setAttribute("contents", results);
         return "index/follow";
     }
 

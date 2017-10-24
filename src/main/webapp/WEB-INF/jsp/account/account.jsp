@@ -99,7 +99,7 @@
     <a class="btn btn-default btn-primary" href="updateinfo.html">修改信息</a>
     <%
         } else {
-            if (user.getFollowee().contains(show)) {
+            if (!user.getFollowee().contains(show)) {
     %>
     <a
             class="btn btn-default btn-primary"

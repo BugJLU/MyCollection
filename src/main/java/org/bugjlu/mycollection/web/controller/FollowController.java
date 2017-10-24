@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
@@ -50,9 +51,15 @@ public class FollowController {
         {
             e.printStackTrace();
         }
-        System.out.println(email);
-        followService.follow(user.getEmail(),email);
-        return "account"; //重定向到查看资料界面
+        System.out.println("::::::"+user.getEmail()+" "+ email);
+        request.getSession().setAttribute("user", followService.follow(user.getEmail(),email));
+//        request.setAttribute("show", accountService.queryByEmail(email));
+        try {
+            return "redirect: account.html?email="+ URLEncoder.encode(email, "UTF-8"); //重定向到查看资料界面
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return "redirect: index.html";
+        }
     }
 
 }
