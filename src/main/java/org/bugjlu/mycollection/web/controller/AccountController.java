@@ -10,6 +10,7 @@ import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 @Controller
 @RequestMapping(value="/")
@@ -21,6 +22,11 @@ public class AccountController {
     @RequestMapping(value="account.html")
     public String account(HttpServletRequest request)
     {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect: index.html";
@@ -44,6 +50,11 @@ public class AccountController {
 
     @RequestMapping(value="updateinfo.html")
     public String updateInfo(HttpServletRequest request) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect: index.html";
@@ -54,6 +65,11 @@ public class AccountController {
 
     @RequestMapping(value = "updateact.html")
     public String updateAct(HttpServletRequest request, RegisterCommand cmd) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect: index.html";

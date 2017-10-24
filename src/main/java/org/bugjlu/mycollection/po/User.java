@@ -1,5 +1,7 @@
 package org.bugjlu.mycollection.po;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +21,29 @@ public class User implements Comparable<User>{
     @Override
     public int compareTo(User o) {
         return userName.compareTo(o.getUserName());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+        return email.equals(((User) obj).getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        md5.update(email.getBytes());
+        byte[] md5Array = md5.digest();
+        return md5Array[3] & 0xFF |
+                (md5Array[2] & 0xFF) << 8 |
+                (md5Array[1] & 0xFF) << 16 |
+                (md5Array[0] & 0xFF) << 24;
     }
 
     public String getEmail() {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Controller
@@ -32,6 +33,11 @@ public class IndexController {
 
     @RequestMapping(value = "index.html")
     ModelAndView index(HttpServletRequest request){
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         if (request.getSession().getAttribute("user") == null) {
             request.setAttribute("title", "欢迎");
             return new ModelAndView("index/visitor");
@@ -42,18 +48,33 @@ public class IndexController {
 
     @RequestMapping(value = "my.html")
     String my(HttpServletRequest request) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect: index.html";
         }
         request.setAttribute("title", "我的");
         List<Content> contents = contentService.getContentFrom(user.getEmail(), user.getEmail());
-        request.setAttribute("contents", contents);
+        List<ContentVo> results = new ArrayList<ContentVo>();
+        for (Content c :
+                contents) {
+            results.add(new ContentVo(c));
+        }
+        request.setAttribute("contents", results);
         return "index/my";
     }
 
     @RequestMapping(value = "follow.html")
     String follow(HttpServletRequest request) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect: index.html";
@@ -82,6 +103,11 @@ public class IndexController {
     //TODO: not checked.
     @RequestMapping(value = "addcontent.html")
     String addContent(HttpServletRequest request, AddContentCommand addcmd) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect: index.html";
@@ -107,7 +133,7 @@ public class IndexController {
                 Tag tag = new Tag();
                 tag.setTagName(tagNames[i]);
                 tag.setUser(user);
-                tagService.addTag(tag);
+//                tagService.addTag(tag);
                 tag = tagService.addTag(tag);
                 tags.add(tag);
             }
@@ -115,9 +141,9 @@ public class IndexController {
         content.setTags(tags);
         contentService.addContent(content);
 //        contentService.addContent();
-        //TODO: update user;
+        request.getSession().setAttribute("user", accountService.queryByEmail(user.getEmail()));
 //        user = accountService.
-        return null;
+        return "redirect: my.html";
     }
 
 //    @RequestMapping(value = "hot.html")

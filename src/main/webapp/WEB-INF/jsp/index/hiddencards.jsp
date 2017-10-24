@@ -35,10 +35,10 @@
                 <label class="control-label">权限</label>
                 <div>
                     <label class="radio-inline">
-                        <input type="radio" name="pms" id="pms1" value="1" checked> 所有人可见
+                        <input type="radio" name="pms" id="pms1" value="0" checked> 所有人可见
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="pms" id="pms0" value="0"> 仅自己可见
+                        <input type="radio" name="pms" id="pms0" value="1"> 仅自己可见
                     </label>
                 </div>
             </div>

@@ -24,6 +24,11 @@ public class FollowController {
 
     @RequestMapping(value = "searchuser.html")
     public String searchUser(HttpServletRequest request) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect: index.html";
@@ -40,6 +45,11 @@ public class FollowController {
     @RequestMapping(value = "followact.html")
     public String followUser(HttpServletRequest request)
     {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect: index.html";

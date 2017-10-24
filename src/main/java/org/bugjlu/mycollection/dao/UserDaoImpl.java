@@ -41,14 +41,19 @@ public class UserDaoImpl implements UserDao{
     @Override
     public User update(User user) {
         Session session = null;
+        User newUser = null;
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            if (user.getPassword() == null)
-            {
-                user.setPassword(session.get(User.class, user.getEmail()).getPassword());
-            }
-            session.update(user);
+            newUser = session.get(User.class, user.getEmail());
+            newUser.setUserName(user.getUserName());
+//            if (user.getPassword() == null)
+//            {
+//                user.setPassword(session.get(User.class, user.getEmail()).getPassword());
+//            }
+            newUser.setGender(user.getGender());
+            newUser.setAge(user.getAge());
+            session.update(newUser);
             session.getTransaction().commit();
         } catch (Exception e)
         {
@@ -61,11 +66,11 @@ public class UserDaoImpl implements UserDao{
                 session.close();
             }
         }
-        if (user != null)
+        if (newUser != null)
         {
-            user.setPassword(null);
+            newUser.setPassword(null);
         }
-        return user;
+        return newUser;
     }
 
     @Override

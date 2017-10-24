@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 @Controller
 @RequestMapping(value = "/")
@@ -34,6 +35,11 @@ public class LoginController {
 
     @RequestMapping(value = "loginact.html")
     public ModelAndView loginact(HttpServletRequest request, LoginCommand loginCommand) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         if (loginCommand.getEmail() == null) {
             return new ModelAndView("redirect: login.html");
         }
@@ -48,6 +54,11 @@ public class LoginController {
 
     @RequestMapping(value = "logout.html")
     public String logout(HttpServletRequest request) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         request.getSession().removeAttribute("user");
         return "redirect: index.html";
     }

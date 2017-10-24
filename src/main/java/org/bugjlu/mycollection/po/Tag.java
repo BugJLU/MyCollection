@@ -2,7 +2,7 @@ package org.bugjlu.mycollection.po;
 
 import java.util.Set;
 
-public class Tag {
+public class Tag implements Comparable<Tag> {
 
     private Integer id;
     private String tagName;
@@ -39,5 +39,22 @@ public class Tag {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public int compareTo(Tag o) {
+        return tagName.compareTo(o.getTagName());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+        return id.equals(((Tag) obj).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 }

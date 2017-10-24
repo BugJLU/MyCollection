@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 @Controller
 @RequestMapping(value = "/")
@@ -19,6 +20,11 @@ public class RegisterController {
 
     @RequestMapping(value = "register.html")
     public String register(HttpServletRequest request) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         if (request.getSession().getAttribute("user") != null) {
             return "redirect: index.html";
         }
@@ -28,7 +34,11 @@ public class RegisterController {
 
     @RequestMapping(value = "regact.html")
     public ModelAndView regact(HttpServletRequest request, RegisterCommand regCmd) {
-
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         request.setAttribute("title", "注册");
         if (regCmd.getEmail() == null) {
             return new ModelAndView("redirect: register.html");
