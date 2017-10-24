@@ -13,7 +13,7 @@ public class ServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void t1() {
-        User user =  followService.follow("qq", "1578644088@qq.com");
+        User user =  followService.follow("11@qq.com", "123@qq.com");
 
     }
 }

@@ -1,6 +1,7 @@
 package org.bugjlu.mycollection.dao;
 
 import org.bugjlu.mycollection.po.User;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -211,11 +212,13 @@ public class UserDaoImpl implements UserDao{
     @Override
     public User addFollowee(String followerEmail, String followeeEmail) {
         Session session = null;
-        User follower = QueryByEmail(followerEmail);
-        User followee = QueryByEmail(followeeEmail);
+        User follower = null;
+        //User followee = QueryByEmail(followeeEmail);
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
+            follower = session.get(User.class, followerEmail);
+            User followee = session.load(User.class, followeeEmail);
             Set allFollowee = follower.getFollowee();
             allFollowee.add(followee);
             follower.setFollowee(allFollowee);
