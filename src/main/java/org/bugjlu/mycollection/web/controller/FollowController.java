@@ -55,15 +55,19 @@ public class FollowController {
             return "redirect: index.html";
         }
         String email = null;
+        String act = null;
         try {
+            act = request.getParameter("act");
             email = URLDecoder.decode(request.getParameter("email"),"UTF-8");
         } catch (UnsupportedEncodingException e)
         {
             e.printStackTrace();
         }
-        System.out.println("::::::"+user.getEmail()+" "+ email);
-        request.getSession().setAttribute("user", followService.follow(user.getEmail(),email));
-//        request.setAttribute("show", accountService.queryByEmail(email));
+        if (act != null && act.equals("unfollow")) {
+            request.getSession().setAttribute("user", followService.unfollow(user.getEmail(), email));
+        } else {
+            request.getSession().setAttribute("user", followService.follow(user.getEmail(),email));
+        }
         try {
             return "redirect: account.html?email="+ URLEncoder.encode(email, "UTF-8"); //重定向到查看资料界面
         } catch (UnsupportedEncodingException e) {

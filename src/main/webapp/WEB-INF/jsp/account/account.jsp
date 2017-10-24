@@ -109,7 +109,11 @@
     <%
             } else {
     %>
-    <a class="btn btn-default btn-default" href="#">已关注</a>
+    <a
+            class="btn btn-default btn-default"
+            href="followact.html?act=unfollow&email=<%= URLEncoder.encode(show.getEmail(),"UTF-8") %>">
+        取消关注
+    </a>
     <%
             }
         }

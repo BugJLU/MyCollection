@@ -256,18 +256,22 @@ public class UserDaoImpl implements UserDao{
     @Override
     public User removeFollowee(String followerEmail, String followeeEmail) {
         Session session = null;
-        User follower = QueryByEmail(followerEmail);
+        User follower = null;
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
+            follower = session.get(User.class, followerEmail);
             Set allFollowee = follower.getFollowee();
-            for (Object user : allFollowee)
-            {
-                if ( ((User)user).getEmail() == followeeEmail )
-                {
-                    allFollowee.remove(user);
-                }
-            }
+            User followee = new User();
+            followee.setEmail(followeeEmail);
+            allFollowee.remove(followee);
+//            for (Object user : allFollowee)
+//            {
+//                if ( ((User)user).getEmail().eq == followeeEmail )
+//                {
+//                    allFollowee.remove(user);
+//                }
+//            }
             follower.setFollowee(allFollowee);
             session.update(follower);
 //            if (follower.getPassword() == null)
