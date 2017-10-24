@@ -31,4 +31,4 @@ target
 
 #hibernate Configurations
 src/main/resources/*
-!hibernate.hbm.xml
+!src/main/resources/hibernate.hbm.xml
