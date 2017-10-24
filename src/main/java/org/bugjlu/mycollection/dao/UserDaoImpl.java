@@ -35,6 +35,8 @@ public class UserDaoImpl implements UserDao{
                 session.close();
             }
         }
+        if (user != null)
+            user.setPassword(null);
         return user;
     }
 
