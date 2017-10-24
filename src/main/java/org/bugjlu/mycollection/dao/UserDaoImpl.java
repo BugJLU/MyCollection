@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class UserDaoImpl implements UserDao{
     @Autowired
@@ -34,7 +35,6 @@ public class UserDaoImpl implements UserDao{
                 session.close();
             }
         }
-        user.setPassword("");
         return user;
     }
 
@@ -61,7 +61,10 @@ public class UserDaoImpl implements UserDao{
                 session.close();
             }
         }
-        user.setPassword(null);
+        if (user != null)
+        {
+            user.setPassword(null);
+        }
         return user;
     }
 
@@ -79,6 +82,7 @@ public class UserDaoImpl implements UserDao{
             session.getTransaction().rollback();
             System.out.println("UserDaoImpl:QueryByEmail失败");
             e.printStackTrace();
+            return null;
         }finally {
             if (session != null) {
                 session.close();
@@ -112,21 +116,20 @@ public class UserDaoImpl implements UserDao{
                 session.close();
             }
         }
-        if (userList != null)
+        if ( userList != null )
         {
-            for(Iterator<User> it = userList.iterator(); it.hasNext(); )
+            for (Object user : userList)
             {
-                User tmpUser = (User) it.next();
-                tmpUser.setPassword(null);               //返回之前把密码置空
+                ((User)user).setPassword(null);
             }
         }
         return userList;
     }
 
     @Override
-    public List FuzzyQueryByEmail(String email) {
+    public List<User> FuzzyQueryByEmail(String email) {
         Session session = null;
-        List<User> userList = new ArrayList();
+        List<User> userList = new ArrayList<User>();
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
@@ -144,17 +147,20 @@ public class UserDaoImpl implements UserDao{
                 session.close();
             }
         }
-        for (User user : userList)
+        if (userList != null)
         {
-            user.setPassword(null);
+            for (Object user : userList)
+            {
+                ((User)user).setPassword(null);
+            }
         }
         return userList;
     }
 
     @Override
-    public List FuzzyQueryByName(String name) {
+    public List<User> FuzzyQueryByName(String name) {
         Session session = null;
-        List<User> userList = new ArrayList();
+        List<User> userList = new ArrayList<User>();
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
@@ -180,7 +186,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User LoginCheck(String email, String password) {
+    public Boolean LoginCheck(String email, String password) {
         Session session = null;
         User user = null;
         try {
@@ -198,10 +204,81 @@ public class UserDaoImpl implements UserDao{
                 session.close();
             }
         }
-        if (user != null & user.getPassword().equals(password))
+        if (user != null && user.getPassword().equals(password))
         {
-            return user;
+            return true;
         }
-        return null;
+        return false;
+    }
+
+    @Override
+    public User addFollowee(String followerEmail, String followeeEmail) {
+        Session session = null;
+        User follower = QueryByEmail(followerEmail);
+        User followee = QueryByEmail(followeeEmail);
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            Set allFollowee = follower.getFollowee();
+            allFollowee.add(followee);
+            follower.setFollowee(allFollowee);
+            session.update(follower);
+//            if (follower.getPassword() == null)
+//            {
+//                follower.setPassword(session.get(User.class, follower.getEmail()).getPassword());
+//            }
+//            follower.getFollowee().add(followee);
+            session.getTransaction().commit();
+        } catch (Exception e)
+        {
+            session.getTransaction().rollback();
+            System.out.println("UserDaoImpl:update失败");
+            e.printStackTrace();
+            return null;
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        follower.setPassword(null);
+        return follower;
+    }
+
+    @Override
+    public User removeFollowee(String followerEmail, String followeeEmail) {
+        Session session = null;
+        User follower = QueryByEmail(followerEmail);
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            Set allFollowee = follower.getFollowee();
+            for (Object user : allFollowee)
+            {
+                if ( ((User)user).getEmail() == followeeEmail )
+                {
+                    allFollowee.remove(user);
+                }
+            }
+            follower.setFollowee(allFollowee);
+            session.update(follower);
+//            if (follower.getPassword() == null)
+//            {
+//                follower.setPassword(session.get(User.class, follower.getEmail()).getPassword());
+//            }
+//            follower.getFollowee().add(followee);
+            session.getTransaction().commit();
+        } catch (Exception e)
+        {
+            session.getTransaction().rollback();
+            System.out.println("UserDaoImpl:update失败");
+            e.printStackTrace();
+            return null;
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        follower.setPassword(null);
+        return follower;
     }
 }

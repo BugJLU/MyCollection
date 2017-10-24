@@ -3,7 +3,9 @@ package org.bugjlu.mycollection.service;
 import org.bugjlu.mycollection.po.User;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public interface AccountService {

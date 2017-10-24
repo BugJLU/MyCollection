@@ -4,16 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class User {
+public class User implements Comparable<User>{
 
     private String email;
     private String userName;
     private String password;
     private Integer age;
     private Boolean gender;
-    private Set<User> followeeEmail;
+    private Set<User> followee;
     private Set<Content> contents;
     private Set<Tag> tags;
+
+
+    @Override
+    public int compareTo(User o) {
+        return userName.compareTo(o.getUserName());
+    }
 
     public String getEmail() {
         return email;
@@ -78,12 +84,12 @@ public class User {
     }
 
 
-    public Set<User> getFolloweeEmail() {
-        return followeeEmail;
+    public Set<User> getFollowee() {
+        return followee;
     }
 
-    public void setFolloweeEmail(Set<User> followeeEmail) {
-        this.followeeEmail = followeeEmail;
+    public void setFollowee(Set<User> followee) {
+        this.followee = followee;
     }
 
     public Set<Content> getContents() {

@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.hibernate.query.Query;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 public class ContentDaoImpl implements ContentDao {
 
@@ -21,7 +19,7 @@ public class ContentDaoImpl implements ContentDao {
     SessionFactory sessionFactory;
 
     @Override
-    public void insert(Content tmpContent) {
+    public Content save(Content tmpContent) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -33,15 +31,39 @@ public class ContentDaoImpl implements ContentDao {
             session.getTransaction().rollback();
             System.out.println("ContentDaoIMpl:insert失败");
             e.printStackTrace();
+            return null;
         }finally {
             if (session != null) {
                 session.close();
             }
         }
+        return tmpContent;
     }
 
     @Override
-    public void delete(int id) {
+    public Content update(Content content) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.update(content);
+            session.getTransaction().commit();
+        } catch (Exception e)
+        {
+            session.getTransaction().rollback();
+            System.out.println("ContentDaoIMpl:update失败");
+            e.printStackTrace();
+            return null;
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return content;
+    }
+
+    @Override
+    public Boolean delete(Integer id) {
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -54,11 +76,13 @@ public class ContentDaoImpl implements ContentDao {
             session.getTransaction().rollback();
             System.out.println("ContentDaoIMpl:delete失败");
             e.printStackTrace();
+            return false;
         }finally {
             if (session != null) {
                 session.close();
             }
         }
+        return true;
     }
 
 //    @Override
@@ -85,20 +109,17 @@ public class ContentDaoImpl implements ContentDao {
 //    }
 
     @Override
-    public void deleteTag(int contentId, int tagId) {
+    public Content addTag(Integer contentId, Integer tagId) {
         Session session = null;
+        Content content = null;
         try {
             session = sessionFactory.openSession();
             session.beginTransaction();
-            Content content = session.get(Content.class, contentId);
-            Set allTag = content.getTags();
-            for (Iterator<Tag> it = allTag.iterator(); it.hasNext() ;)
-            {
-                Tag tag = (Tag) it.next();
-                if (tag.getId() == tagId)
-                    allTag.remove(tag);
-            }
-            content.setTags(allTag);
+            content = session.get(Content.class, contentId);
+            Tag tag = session.get(Tag.class, tagId);
+            Set tags = content.getTags();
+            tags.add(tag);
+            content.setTags(tags);
             session.save(content);
             session.getTransaction().commit();
         } catch (Exception e)
@@ -106,10 +127,76 @@ public class ContentDaoImpl implements ContentDao {
             session.getTransaction().rollback();
             System.out.println("ContentDaoIMpl:queryByEmail失败");
             e.printStackTrace();
+            return null;
         }finally {
             if (session != null) {
                 session.close();
             }
         }
+        return content;
     }
+
+    @Override
+    public Content deleteTag(Integer contentId, Integer tagId) {
+        Session session = null;
+        Content content = null;
+        Set<Tag> tags = new HashSet<Tag>();
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            content = session.get(Content.class, contentId);
+            tags = content.getTags();
+            for(Iterator it = tags.iterator(); it.hasNext(); )
+            {
+                Tag tmpTag = (Tag) it.next();
+                if (tmpTag.getId() == tagId)
+                    it.remove();
+            }
+            content.setTags(tags);
+            session.update(content);
+            session.getTransaction().commit();
+        } catch (Exception e)
+        {
+            session.getTransaction().rollback();
+            System.out.println("ContentDaoIMpl:deleteTag失败");
+            e.printStackTrace();
+            return null;
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return content;
+    }
+
+    @Override
+    public List<Content> QueryContentsByEmail(String requester,String respondent) {
+        Session session = null;
+        List<Content> contentsList = new ArrayList<Content>();
+        int permission;
+        if (requester.equals(respondent)){
+            permission = 2;
+        } else {
+            permission = 1;
+        }
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            String hql = "from Content content where content.user.email = :email and content.permission < :permission";
+            contentsList = session.createQuery(hql).setParameter("email", respondent).setParameter("permission",permission).list();
+            session.getTransaction().commit();
+        } catch (Exception e)
+        {
+            session.getTransaction().rollback();
+            System.out.println("TagDaoImpl:save失败");
+            e.printStackTrace();
+            return null;
+        }finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return contentsList;
+    }
+
 }

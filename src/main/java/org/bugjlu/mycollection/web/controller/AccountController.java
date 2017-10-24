@@ -13,11 +13,14 @@ public class AccountController {
     @RequestMapping(value="account.html")
     public String account(HttpServletRequest request)
     {
-
+        return null;
     }
 
     @RequestMapping(value="updateinfo.html")
-    public String account(HttpServletRequest request)
+    public String accountUpdate(HttpServletRequest request)
+    {
+        return null;
+    }
 
 
 }

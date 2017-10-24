@@ -47,7 +47,7 @@ public class FollowController {
         }
         User user = (User) request.getSession().getAttribute("user");
         followService.follow(user.getEmail(),email);
-        return "account" //重定向到查看资料界面
+        return "account"; //重定向到查看资料界面
     }
 
 }

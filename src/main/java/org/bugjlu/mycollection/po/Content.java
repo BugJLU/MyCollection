@@ -3,7 +3,7 @@ package org.bugjlu.mycollection.po;
 import java.util.Date;
 import java.util.Set;
 
-public class Content {
+public class Content implements Comparable<Content>{
 
     private Integer id;
     private String url;
@@ -11,6 +11,16 @@ public class Content {
     private Date date;
     private Set<Tag> tags;
     private User user;
+
+
+    @Override
+    public int compareTo(Content o) {
+        if (date.before(o.getDate())){
+            return 1;
+        } else{
+            return -1;
+        }
+    }
 
     public Set<Tag> getTags() {
         return tags;

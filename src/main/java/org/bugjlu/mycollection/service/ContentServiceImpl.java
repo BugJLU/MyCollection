@@ -1,9 +1,13 @@
 package org.bugjlu.mycollection.service;
 
+import org.bugjlu.mycollection.dao.ContentDao;
+import org.bugjlu.mycollection.dao.TagDao;
+import org.bugjlu.mycollection.dao.UserDao;
 import org.bugjlu.mycollection.po.Content;
 import org.bugjlu.mycollection.po.Tag;
 import org.bugjlu.mycollection.po.User;
 import org.bugjlu.mycollection.web.vo.ContentVo;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,54 +15,54 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ContentServiceImpl implements ContentService {
-    public void addContent(String email, Content content) {
 
+    @Autowired
+    UserDao userDao;
+
+    @Autowired
+    ContentDao contentDao;
+
+
+    public Content addContent(Content content) {
+        return contentDao.save(content);
     }
 
-    public void removeContent(Integer contentId) {
-
-    }
-
-    public List<ContentVo> getContentFrom(User requester, User respondent) {
-        // TODO: rewrite
-        ArrayList<ContentVo> contents = new ArrayList<ContentVo>();
-        for (int i = 0; i < 10; i++) {
-            ContentVo content = new ContentVo();
-            content.setId(1);
-            content.setDate(new Timestamp(new Date().getTime()));
-            content.setUrl("http://tech.sina.com.cn/roll/2017-10-20/doc-ifymzksi0528605.shtml");
-            content.setUserName("wang");
-            List<Tag> tags = new ArrayList<Tag>();
-            for (int j = 0; j < 5; j++) {
-                Tag tag = new Tag();
-                tag.setTagName("hehehe");
-                tags.add(tag);
-            }
-            content.setTags(tags);
-            contents.add(content);
+    public int removeContent(Integer contentId) {
+        Boolean success = contentDao.delete(contentId);
+        if (success) {
+            return 1;
+        } else {
+            return 0;
         }
-        return contents;
     }
 
     @Override
-    public List<ContentVo> getContentFrom(User requester, List<User> respondents) {
-        return getContentFrom(requester, requester);
-    }
-
-    public List<ContentVo> getLatestContentFrom(User requester, User respondent, Date time) {
-        return null;
+    public List<Content> QueryContentsByEmail(String email) {
+        return contentDao.QueryContentsByEmail(email, email);
     }
 
     @Override
-    public List<ContentVo> getLatestContentFrom(User requester, List<User> respondents, Date time) {
-        return null;
+    public List<Content> getContentFrom(String requester, String respondent) {
+        List<Content> list = contentDao.QueryContentsByEmail(requester, respondent);
+        Collections.sort(list);
+        return list;
     }
 
+    @Override
+    public List<Content> getContentFrom(String requester, List<String> respondents) {
+        Set<Content> set = new HashSet<Content>();
+        List<Content> list = new ArrayList<Content>();
+        for (String respondent : respondents)
+        {
+            set.addAll(contentDao.QueryContentsByEmail(requester, respondent));
+        }
+        list.addAll(set);
+        Collections.sort(list);
+        return list;
+    }
 }

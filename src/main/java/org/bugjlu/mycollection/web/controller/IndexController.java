@@ -44,7 +44,7 @@ public class IndexController {
             return "redirect: index.html";
         }
         request.setAttribute("title", "我的");
-        List<ContentVo> contents = contentService.getContentFrom(user, user);
+        List<Content> contents = contentService.getContentFrom(user.getEmail(), user.getEmail());
         request.setAttribute("contents", contents);
         return "index/my";
     }
@@ -57,7 +57,11 @@ public class IndexController {
         }
         request.setAttribute("title", "关注");
         List<User> followees = followService.getAllFollowee(user.getEmail());
-        List<ContentVo> contents = contentService.getContentFrom(user, followees);
+        List<String> followeeEmails = new ArrayList<String>();
+        for (User email : followees){
+            followeeEmails.add(email.getEmail());
+        }
+        List<Content> contents = contentService.getContentFrom(user.getEmail(), followeeEmails);
         request.setAttribute("contents", contents);
         return "index/follow";
     }
@@ -96,7 +100,7 @@ public class IndexController {
             }
         }
         content.setTags(tags);
-        contentService.addContent(user.getEmail(), content);
+        contentService.addContent(content);
 //        contentService.addContent();
         return null;
     }

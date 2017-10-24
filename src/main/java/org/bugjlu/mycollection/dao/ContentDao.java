@@ -10,8 +10,11 @@ import java.util.List;
 
 @Repository
 public interface ContentDao {
-    public void insert(Content tmpContent);
-    public void delete(int id);
+    public Content save(Content tmpContent);
+    public Content update(Content content);
+    public Boolean delete(Integer id);
 //    public List<Content> queryByEmail(String email);
-    public void deleteTag(int contentId, int tagId);
+    public Content addTag(Integer contentId, Integer tagId);
+    public Content deleteTag(Integer contentId,Integer tagId);
+    public List<Content> QueryContentsByEmail(String requester,String respondent);
 }

@@ -1,47 +1,72 @@
 package org.bugjlu.mycollection.service;
 
+import org.bugjlu.mycollection.dao.UserDao;
 import org.bugjlu.mycollection.dao.UserDaoImpl;
 import org.bugjlu.mycollection.po.User;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import java.util.*;
 
 public class AccountServiceImpl implements AccountService {
+
+    @Autowired
+    UserDao userDao;
+
+
+
     public User login(String email, String password) {
         // TODO: rewrite
 //        User user = new User();
 //        user.setUserName("王二狗");
 //        user.setEmail("www");
 //        return user;
-        UserDaoImpl userDao = new UserDaoImpl();
-        return userDao.LoginCheck(email,password);
+        Boolean success = userDao.LoginCheck(email,password);
+        if (success) {
+            return userDao.QueryByEmail(email);
+        } else {
+            return null;
+        }
     }
 
     public User register(User user) {
-        UserDaoImpl userDao = new UserDaoImpl();
-        return  userDao.save(user);
+        return userDao.save(user);
     }
 
     @Override
-    public List searchUser(String key) {
-        UserDaoImpl userDao = new UserDaoImpl();
-        List nameList = userDao.FuzzyQueryByName(key);
-        List emailList = userDao.FuzzyQueryByEmail(key);
-        return emailList.addAll(nameList)? emailList : null;
+    public List<User> searchUser(String key) {
+        Set<User> set = new HashSet<User>();
+        List<User> list = new ArrayList<User>();
+        set.addAll(userDao.FuzzyQueryByName(key));
+        set.addAll(userDao.FuzzyQueryByEmail(key));
+        list.addAll(set);
+        Collections.sort(list);
+        return list;
     }
 
     @Override
     public User modifyUser(User user) {
-        UserDaoImpl userDao = new UserDaoImpl();
         return userDao.update(user);
     }
 
     @Override
     public User follow(String followerEmail, String followeeEmail) {
-        return null;
+        return userDao.addFollowee(followerEmail, followeeEmail);
+//        User follower = userDao.QueryByEmail(followerEmail);
+//        User followee = userDao.QueryByEmail(followeeEmail);
+//        if (follower != null && followee != null)
+//        {
+//            userDao.addFollowee(follower, followee);
+//        }
     }
 
     @Override
     public User unfollow(String followerEmail, String followeeEmail) {
-        return null;
+        return userDao.removeFollowee(followerEmail,followeeEmail);
+//        User follower = userDao.QueryByEmail(followerEmail);
+//        User followee = userDao.QueryByEmail(followeeEmail);
+//        if (follower != null && followee != null)
+//        {
+//            userDao.removeFollowee(follower, followee);
+//        }
     }
 }
