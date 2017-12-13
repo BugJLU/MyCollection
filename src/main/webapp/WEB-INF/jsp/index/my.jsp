@@ -1,7 +1,9 @@
 <%@ page import="org.bugjlu.mycollection.web.vo.ContentVo" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.bugjlu.mycollection.po.Tag" %>
-<%@ page import="org.bugjlu.mycollection.po.Content" %><%--
+<%@ page import="org.bugjlu.mycollection.po.Content" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="org.bugjlu.mycollection.po.User" %><%--
   Created by IntelliJ IDEA.
   User: mac
   Date: 2017/10/6
@@ -72,6 +74,12 @@
     </div>
 </nav>
 
+<%--<%--%>
+    <%--for (Tag tag: ((User)request.getSession().getAttribute("user")).getTags())--%>
+    <%--{--%>
+        <%----%>
+    <%--}--%>
+<%--%>--%>
 <div class="maincontainer row" id="maincontainer">
     <%
         List<ContentVo> contents = (List<ContentVo>) request.getAttribute("contents");
@@ -87,7 +95,7 @@
                 content.fetchTitlePict();
     %>
     <div class="content col-xs-3" id="content-<%= content.getId() %>">
-        <div id="tags" class="content-tags">
+        <div id="tags-<%= content.getId() %>" class="content-tags">
             <%
                 List<Tag> tags = content.getTags();
                 if (tags != null) {
@@ -117,6 +125,12 @@
         </div>
         <div id="user" class="content-user">
             <%--<p style="font-size: 10px; color: #adadad">收藏者：<%= content.getUserName() %></p>--%>
+        </div>
+        <div id="updatebuttons" class=""  >
+            <a href="contentdelete.html?id=<%= URLEncoder.encode("" + content.getId()) %>" >
+                <img src="" id="deletebutton<%= content.getId() %>" />
+            </a>
+            <%--<img src="" id="updatebutton<%= content.getId() %>" onclick="updateContent(this.id)"/>--%>
         </div>
     </div>
     <%

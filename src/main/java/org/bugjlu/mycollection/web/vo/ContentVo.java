@@ -18,6 +18,7 @@ public class ContentVo {
     private Integer id;
     private String url;
     private Date date;
+    private Integer permission;
     private String userName;
     private List<Tag> tags;
     private String title;
@@ -27,6 +28,7 @@ public class ContentVo {
         id = content.getId();
         url = content.getUrl();
         date = content.getDate();
+        permission = content.getPermission();
         userName = content.getUser().getUserName();
         tags = new ArrayList<Tag>(content.getTags());
         fetchTitlePict();

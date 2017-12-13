@@ -40,3 +40,37 @@ function doAdd() {
         form.submit()
     }
 }
+
+
+
+
+function updateContent(id) {
+    var hidbg = document.getElementById("addCard");
+    hidbg.style.display="";
+}
+
+
+
+
+function chooseTag(id) {
+    var currentTag = document.getElementById(id);
+    var nameInput = document.getElementById("form-control");
+    if (currentTag.style.backgroundColor == "#e6e6e6")
+    {
+        nameInput.value += "," + currentTag.innerHTML;
+        currentTag.style.backgroundColor = "#0099aa";
+    } else{
+        var newNames = ""
+        var names = nameInput.value.split(",");
+        for (var i = 0; i < names.length; i++)
+        {
+            if (names[i] != currentTag.innerHTML)
+            {
+                newNames += names[i]
+            }
+        }
+        nameInput.value = newNames;
+        currentTag.style.backgroundColor = "#e6e6e6"
+    }
+
+}
