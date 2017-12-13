@@ -40,3 +40,10 @@ function doAdd() {
         form.submit()
     }
 }
+
+function doDelete(cid) {
+    var b = confirm("确认删除此内容？");
+    if (b) {
+        window.location.href="delete_content.html?id="+cid;
+    }
+}

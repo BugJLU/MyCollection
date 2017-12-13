@@ -68,6 +68,44 @@ public class IndexController {
         return "index/my";
     }
 
+    @RequestMapping(value = "tag.html")
+    String tag(HttpServletRequest request) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "redirect: index.html";
+        }
+        String idp = request.getParameter("id");
+        Integer tagid = null;
+        try {
+            tagid = Integer.parseInt(idp);
+        } catch (Exception e) {
+            return "redirect: index.html";
+        }
+        Tag tag = null;
+        for (Tag t :
+                user.getTags()) {
+            if(t.getId().equals(tagid)) {
+                tag = t;
+                break;
+            }
+        }
+        if (tag == null) return "redirect: index.html";
+        request.setAttribute("title", "标签 - "+tag.getTagName());
+        request.setAttribute("subtitle", "标签"+tag.getTagName()+"下的内容：");
+        List<ContentVo> results = new ArrayList<ContentVo>();
+        for (Content c:
+             tag.getContents()) {
+            results.add(new ContentVo(c));
+        }
+        request.setAttribute("contents", results);
+        return "index/my";
+    }
+
     @RequestMapping(value = "follow.html")
     String follow(HttpServletRequest request) {
         try {
@@ -144,6 +182,34 @@ public class IndexController {
         request.getSession().setAttribute("user", accountService.queryByEmail(user.getEmail()));
 //        user = accountService.
         return "redirect: my.html";
+    }
+
+    @RequestMapping(value = "delete_content.html")
+    String deleteContent(HttpServletRequest request) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "redirect: index.html";
+        }
+        String cid = request.getParameter("id");
+        Integer contentId = null;
+        try {
+            contentId = Integer.parseInt(cid);
+        } catch (Exception e) {
+            return "redirect: index.html";
+        }
+        for (Content c:
+             user.getContents()) {
+            if (c.getId().equals(contentId)) {
+                contentService.removeContent(contentId);
+                break;
+            }
+        }
+        return "redirect: index.html";
     }
 
 //    @RequestMapping(value = "hot.html")

@@ -84,7 +84,7 @@
         } else {
             for (ContentVo content :
                     contents) {
-                content.fetchTitlePict();
+//                content.fetchTitlePict();
     %>
     <div class="content col-xs-3" id="content-<%= content.getId() %>">
         <div id="tags" class="content-tags" style="height: 10px">

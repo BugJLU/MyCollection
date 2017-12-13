@@ -34,7 +34,7 @@
                 <%
                     if (request.getSession().getAttribute("user") != null) {
                 %>
-                <li class="active"><a href="#">我的</a></li>
+                <li class="active"><a href="index.html">我的</a></li>
                 <li><a href="follow.html">关注</a></li>
                 <%
                     }
@@ -62,6 +62,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="searchuser.html">添加关注</a> </li>
                         <li><a href="javascript:void(0);" onclick="addContent()">添加内容</a> </li>
+                        <li><a href="export.html" target="_blank">导出</a></li>
                     </ul>
                 </li>
                 <%
@@ -82,9 +83,14 @@
         <h2>点击<a href="javascript:void(0);" onclick="addContent()">添加内容</a></h2>
     </div>
     <%        } else {
+            if (request.getAttribute("subtitle") != null) {
+    %>
+    <h2>${subtitle}</h2>
+    <%
+            }
             for (ContentVo content :
                     contents) {
-                content.fetchTitlePict();
+//                content.fetchTitlePict();
     %>
     <div class="content col-xs-3" id="content-<%= content.getId() %>">
         <div id="tags" class="content-tags">
@@ -94,9 +100,9 @@
                     for (Tag tag :
                             tags) {
             %>
-            <div class="tag-small" id="tag-<%= tag.getId() %>">
+            <a class="tag-small" id="tag-<%= tag.getId() %>" href="tag.html?id=<%= tag.getId() %>">
                 <%= tag.getTagName() %>
-            </div>
+            </a>
             <%
                     }
                 }
@@ -117,6 +123,13 @@
         </div>
         <div id="user" class="content-user">
             <%--<p style="font-size: 10px; color: #adadad">收藏者：<%= content.getUserName() %></p>--%>
+            <%--<a href="#" class="pull-right visible-sm-inline-block"><img src="img/edit.png"></a>--%>
+            <%--<a href="#" class="pull-right visible-sm-inline-block"><img src="img/delete.png"></a>--%>
+            <div style="display: inline-block; float: right;">
+                <%--<img class="tool-icon" src="img/edit.png" onclick="">--%>
+                <img class="tool-icon" src="img/delete.png" onclick="doDelete(<%=content.getId()%>)">
+            </div>
+
         </div>
     </div>
     <%

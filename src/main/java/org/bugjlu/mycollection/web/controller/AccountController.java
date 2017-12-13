@@ -10,6 +10,9 @@ import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 
 @Controller
@@ -89,5 +92,29 @@ public class AccountController {
         }
     }
 
+    @RequestMapping(value = "export.html")
+    public String updateInfo(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "redirect: index.html";
+        }
+        try {
+            response.reset();
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + "export" + "\"");
+            response.setContentType("application/octet-stream;charset=UTF-8");
+            ObjectOutputStream oos = new ObjectOutputStream(response.getOutputStream());
+            oos.writeObject(user);
+            oos.flush();
+            oos.close();
+        } catch (IOException e) {
+            return "redirect: index.html";
+        }
+        return "";
+    }
 
 }

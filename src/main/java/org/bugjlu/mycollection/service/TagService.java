@@ -13,4 +13,5 @@ public interface TagService {
     Tag addContentToTag(Integer contentId, Integer tagId);
     Tag removeContentFromTag(Integer contentId, Integer tagId);
     List<Tag> getTagsByEmail(String email);
+//    Tag getTagById(Integer tagId);
 }

@@ -1,12 +1,13 @@
 package org.bugjlu.mycollection.po;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class User implements Comparable<User>{
+public class User implements Comparable<User>, Serializable {
 
     private String email;
     private String userName;

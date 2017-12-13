@@ -1,8 +1,9 @@
 package org.bugjlu.mycollection.po;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class Tag implements Comparable<Tag> {
+public class Tag implements Comparable<Tag>, Serializable {
 
     private Integer id;
     private String tagName;

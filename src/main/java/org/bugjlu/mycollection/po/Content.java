@@ -1,9 +1,10 @@
 package org.bugjlu.mycollection.po;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-public class Content implements Comparable<Content>{
+public class Content implements Comparable<Content>, Serializable{
 
     private Integer id;
     private String url;
@@ -20,6 +21,21 @@ public class Content implements Comparable<Content>{
         } else{
             return -1;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Content) {
+            if (id.equals(((Content) obj).id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Set<Tag> getTags() {
