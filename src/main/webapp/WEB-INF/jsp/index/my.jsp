@@ -63,6 +63,7 @@
                         <li><a href="searchuser.html">添加关注</a> </li>
                         <li><a href="javascript:void(0);" onclick="addContent()">添加内容</a> </li>
                         <li><a href="export.html" target="_blank">导出</a></li>
+                        <li><a href="javascript:void(0);" onclick="uploadImport()">导入</a> </li>
                     </ul>
                 </li>
                 <%

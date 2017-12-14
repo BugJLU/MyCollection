@@ -33,6 +33,9 @@ public class User implements Comparable<User>, Serializable {
 
     @Override
     public int hashCode() {
+        if (email == null) {
+            return super.hashCode();
+        }
         MessageDigest md5 = null;
         try {
             md5 = MessageDigest.getInstance("MD5");

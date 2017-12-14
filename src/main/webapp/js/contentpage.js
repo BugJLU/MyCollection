@@ -16,6 +16,10 @@ function resize() {
 function addContent() {
     var hidbg = document.getElementById("hidden-background");
     hidbg.style.display="";
+    var addcard = document.getElementById("addCard");
+    var importcard = document.getElementById("importCard");
+    addcard.style.display="";
+    importcard.style.display="none";
     // var card = document.createElement("div");
     // card.setAttribute("id", "addCard");
     // card.setAttribute("onclick", "javascript:void(0)");
@@ -25,9 +29,22 @@ function addContent() {
     // hidbg.appendChild(card);
 }
 
+function uploadImport() {
+    var hidbg = document.getElementById("hidden-background");
+    hidbg.style.display="";
+    var addcard = document.getElementById("addCard");
+    var importcard = document.getElementById("importCard");
+    addcard.style.display="none";
+    importcard.style.display="";
+}
+
 function closeCard() {
     var hidbg = document.getElementById("hidden-background");
     hidbg.style.display="none";
+    var addcard = document.getElementById("addCard");
+    var importcard = document.getElementById("importCard");
+    addcard.style.display="none";
+    importcard.style.display="none";
     // hidbg.removeChild(hidbg.childNodes[0]);
 }
 
@@ -45,5 +62,15 @@ function doDelete(cid) {
     var b = confirm("确认删除此内容？");
     if (b) {
         window.location.href="delete_content.html?id="+cid;
+    }
+}
+
+function doImport() {
+    var file = document.getElementById("file").value;
+    if (file === "") {
+        alert("请选择文件");
+    } else {
+        var form = document.getElementById("importform");
+        form.submit();
     }
 }

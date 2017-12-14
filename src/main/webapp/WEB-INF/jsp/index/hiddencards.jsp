@@ -19,7 +19,7 @@
 
 <%--<div id="hid" style="z-index: 10000"></div>--%>
 <div class="layer-background" id="hidden-background" style="display: none">
-    <div class="layer-foreground container" id="addCard" style="width: 500px; height: 400px; border: solid">
+    <div class="layer-foreground container" id="addCard" style="width: 500px; height: 400px; border: solid; display: none">
         <h3>添加内容</h3>
         <hr color="#A0A0A0"/>
         <form id="addform" class="form-horizontal hidden-form" role="form" action="addcontent.html" method="post">
@@ -47,5 +47,20 @@
             <button type="button" class="btn btn-default btn-success btn-block card-btn" onclick="doAdd()">添加</button>
             <button type="button" class="btn btn-default btn-block card-btn" onclick="closeCard()">关闭</button>
         </div>
+    </div>
+
+    <div class="layer-foreground container" id="importCard" style="width: 500px; height: 400px; border: solid; display: none">
+        <h3>上传导入文件</h3>
+        <hr color="#A0A0A0"/>
+        <form id="importform" class="form-horizontal hidden-form" role="form" action="import.html" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="control-label" for="file">导入的文件</label>
+                <input class="form-control" id="file" name="file" type="file">
+            </div>
+            <div class="button-group pull-right">
+                <button type="button" class="btn btn-default btn-success btn-block card-btn" onclick="doImport()">导入</button>
+                <button type="button" class="btn btn-default btn-block card-btn" onclick="closeCard()">关闭</button>
+            </div>
+        </form>
     </div>
 </div>

@@ -209,6 +209,7 @@ public class IndexController {
                 break;
             }
         }
+        request.getSession().setAttribute("user", accountService.queryByEmail(user.getEmail()));
         return "redirect: index.html";
     }
 

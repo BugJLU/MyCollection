@@ -1,19 +1,24 @@
 package org.bugjlu.mycollection.web.controller;
 
 
+import org.bugjlu.mycollection.po.Content;
+import org.bugjlu.mycollection.po.Tag;
 import org.bugjlu.mycollection.po.User;
 import org.bugjlu.mycollection.service.AccountService;
+import org.bugjlu.mycollection.service.ContentService;
+import org.bugjlu.mycollection.service.TagService;
 import org.bugjlu.mycollection.web.vo.RegisterCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.util.HashSet;
 
 @Controller
 @RequestMapping(value="/")
@@ -21,6 +26,12 @@ public class AccountController {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    ContentService contentService;
+
+    @Autowired
+    TagService tagService;
 
     @RequestMapping(value="account.html")
     public String account(HttpServletRequest request)
@@ -93,7 +104,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "export.html")
-    public String updateInfo(HttpServletRequest request, HttpServletResponse response) {
+    public String export(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.setCharacterEncoding("utf-8");
         } catch (UnsupportedEncodingException e) {
@@ -115,6 +126,49 @@ public class AccountController {
             return "redirect: index.html";
         }
         return "";
+    }
+
+    @RequestMapping(value = "import.html")
+    public String _import(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "redirect: index.html";
+        }
+        try {
+            if (!file.isEmpty()) {
+                InputStream is = file.getInputStream();
+                ObjectInputStream ois = new ObjectInputStream(is);
+                Object o = ois.readObject();
+                ois.close();
+                if (!(o instanceof  User)) {
+                    throw new Exception();
+                }
+                User u = (User) o;
+                for (Tag t:
+                        u.getTags()) {
+                    if (!user.getTags().contains(t)) {
+                        t.setContents(new HashSet<Content>());
+                        tagService.addTag(t);
+                    }
+                }
+                for (Content c:
+                     u.getContents()) {
+                    if (!user.getContents().contains(c))
+                        contentService.addContent(c);
+                }
+                request.getSession().setAttribute("user", accountService.queryByEmail(user.getEmail()));
+//                System.out.println("000000000");
+            }
+        } catch (Exception e) {
+//            e.printStackTrace();
+            return "redirect: index.html";
+        }
+        return "redirect: index.html";
     }
 
 }

@@ -56,6 +56,7 @@ public class Tag implements Comparable<Tag>, Serializable {
 
     @Override
     public int hashCode() {
-        return id;
+        if (id != null) return id;
+        else return super.hashCode();
     }
 }
