@@ -15,6 +15,8 @@
 
 <%@ include file="../head.jsp" %>
 
+<% String list = (String) request.getAttribute("list");%>
+
 <link href="css/contentpage.css" rel="stylesheet">
 
 <body onresize="changenav()" onload="changenav()" class="body-my">
@@ -28,12 +30,22 @@
     <div id="formdiv" class="nav navbar-nav navbar-left row formnav" style="padding: 9px; width: 100%">
         <form action="searchuser.html" method="get">
             <div class="row">
+                <%
+                    if (list == null) {
+                %>
                 <div class="col-xs-8">
                     <input type="text" name="skey" class="form-control" value="<%=request.getParameter("skey")==null?"":request.getParameter("skey")%>">
                 </div>
                 <div class="col-xs-2">
                     <input type="submit" class="btn btn-default btn-warning" style="right: 0px" value="搜索">
                 </div>
+                <%
+                    } else {
+                %>
+                <div class="col-xs-10"></div>
+                <%
+                    }
+                %>
                 <div class="col-xs-2">
                     <button type="button" class="navbar-toggle mytoggle" data-toggle="collapse"
                             data-target="#navbar,#brand">
@@ -78,7 +90,17 @@
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
+                    <%
+                        if (list == null) {
+                    %>
                     <li class="active"><a href="#">添加关注</a> </li>
+                    <%
+                        } else {
+                    %>
+                    <li><a href="searchuser.html">添加关注</a> </li>
+                    <%
+                        }
+                    %>
                     <li><a href="my.html">添加内容</a> </li>
                 </ul>
             </li>
@@ -90,7 +112,7 @@
 </nav>
 
 <%
-    if(request.getParameter("skey") == null) {
+    if (list == null && request.getParameter("skey") == null) {
 %>
 <div class="maincontainer" id="maincontainer">
     <div class="nothingtoshow">
@@ -102,6 +124,16 @@
     else {
         List<User> result = (List<User>) request.getAttribute("result");
         if (result == null || result.size() == 0){
+            if (list != null && list.equals("followee")){
+%>
+<div class="maincontainer" id="maincontainer">
+    <div class="nothingtoshow">
+        <h2>您还没有关注任何人哦！</h2>
+        <h2>点击<a href="searchuser.html">添加关注</a></h2>
+    </div>
+</div>
+<%
+            } else {
 %>
 <div class="maincontainer" id="maincontainer">
     <div class="nothingtoshow">
@@ -109,14 +141,19 @@
     </div>
 </div>
 <%
+            }
         } else {
 %>
 
 <div class="resultcontent">
+    <%
+        if (list == null) {
+    %>
     <div class="container">
         <p style="color: #5e5e5e">搜索到${result.size()}条数据</p>
     </div>
     <%
+        }
         for (User u :
                 result) {
     %>

@@ -86,7 +86,7 @@
     <%        } else {
             if (request.getAttribute("subtitle") != null) {
     %>
-    <h2>${subtitle}</h2>
+    <h3>${subtitle}</h3>
     <%
             }
             for (ContentVo content :

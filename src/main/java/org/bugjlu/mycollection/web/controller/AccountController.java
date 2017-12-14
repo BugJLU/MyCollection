@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 @Controller
 @RequestMapping(value="/")
@@ -32,6 +34,24 @@ public class AccountController {
 
     @Autowired
     TagService tagService;
+
+    @RequestMapping(value = "followee.html")
+    public String followee(HttpServletRequest request) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            return "redirect: index.html";
+        }
+        request.setAttribute("title", "关注的人");
+        request.setAttribute("list", "followee");
+        List<User> result = new ArrayList<User>(user.getFollowee());
+        request.setAttribute("result", result);
+        return "account/searchuser";
+    }
 
     @RequestMapping(value="account.html")
     public String account(HttpServletRequest request)

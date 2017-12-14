@@ -19,6 +19,16 @@ public class ContentVo {
     private String url;
     private Date date;
     private String userName;
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    private String userEmail;
     private List<Tag> tags;
     private String title;
     private String pict;
@@ -28,6 +38,7 @@ public class ContentVo {
         url = content.getUrl();
         date = content.getDate();
         userName = content.getUser().getUserName();
+        userEmail = content.getUser().getEmail();
         tags = new ArrayList<Tag>(content.getTags());
         fetchTitlePict();
     }

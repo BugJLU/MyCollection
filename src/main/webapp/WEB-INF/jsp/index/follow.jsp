@@ -1,6 +1,8 @@
 <%@ page import="org.bugjlu.mycollection.web.vo.ContentVo" %>
 <%@ page import="org.bugjlu.mycollection.po.Tag" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="org.bugjlu.mycollection.po.User" %><%--
   Created by IntelliJ IDEA.
   User: mac
   Date: 2017/10/6
@@ -82,6 +84,10 @@
     </div>
     <%
         } else {
+            User user = (User) request.getSession().getAttribute("user");
+    %>
+    <h3><a href="followee.html">您关注了<%= user.getFollowee().size() %>人</a></h3>
+    <%
             for (ContentVo content :
                     contents) {
 //                content.fetchTitlePict();
@@ -116,7 +122,7 @@
             <p style="font-size: 10px; color: #adadad"><%= content.getDate() %></p>
         </div>
         <div id="user" class="content-user">
-            <p style="font-size: 10px; color: #adadad">收藏者：<%= content.getUserName() %></p>
+            <a href="account.html?email=<%= URLEncoder.encode(content.getUserEmail(), "UTF-8") %>" style="font-size: 10px; color: #adadad">收藏者：<%= content.getUserName() %></a>
         </div>
     </div>
     <%
